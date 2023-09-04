@@ -5,8 +5,8 @@ Simple Security Information and Event Management
 
 Anas Abdulhaq  (Cleo5779)  
 Tommy Zhang  
+Muhammad Rafiullah Memon 
 Fatima Hanif (fatimahanif10) 
-Muhammad Rafiullah Memon  
 Faiz Syed Ibrahim  
 Rhyanna Arisya Zaharoom
 
