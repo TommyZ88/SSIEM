@@ -7,6 +7,6 @@ Anas Abdulhaq  (Cleo5779)
 Tommy Zhang  
 Muhammad Rafiullah Memon 
 Fatima Hanif (fatimahanif10) 
-Faiz Syed Ibrahim  
+Faiz Syed Ibrahim (Faiz-95 / Fuzzy095)
 Rhyanna Arisya Zaharoom
 
