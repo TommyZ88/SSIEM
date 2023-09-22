@@ -1,8 +1,8 @@
 # Use the official Python image as the base image
-FROM python:3-alpine3.15
+FROM python:3.9-alpine
 
 # Set the working directory in the container
-WORKDIR /web
+WORKDIR /frontend
 
 # Copy the requirements.txt file into the container
 COPY requirements.txt .

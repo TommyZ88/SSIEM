@@ -50,16 +50,6 @@ services:
       nofile:
         soft: 65536
         hard: 65536
-  
-  web-app:
-    build: 
-      context: ./web
-    container_name: flask-SIEM
-    restart: always
-    ports:
-      - "5000:5000"
-    depends_on:
-      - elasticsearch
 
   kibana:
     image: wazuh/wazuh-kibana-odfe:4.2.6
@@ -80,6 +70,16 @@ services:
       - elasticsearch:elasticsearch
       - wazuh:wazuh
 
+  flask:
+    build: 
+      context: ./frontend
+    container_name: flask
+    hostname: flask
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - elasticsearch
 
 #  grafana:
 #    image: grafana/grafana:latest
