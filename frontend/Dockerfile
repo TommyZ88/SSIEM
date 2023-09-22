@@ -1,5 +1,5 @@
-# Use the official Python image as the base image
-FROM python:3.9-alpine
+# Use the Debian-based Python image
+FROM python:3.9-slim-buster
 
 # Set the working directory in the container
 WORKDIR /frontend

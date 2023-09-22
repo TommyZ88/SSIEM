@@ -1,0 +1,23 @@
+<!doctype html>
+<title>Dashboard</title>
+<div>
+    <h2>Alert Level Over Time</h2>
+    {{ plot1|safe }}
+</div>
+<div id="table-container">
+    <h2>Agent Information</h2>
+    {{ agent_table|safe }}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Set interval to refresh plot every 10 seconds (10000 milliseconds)
+    setInterval(function(){
+        // Send AJAX GET request to the Flask route to get updated plot
+        $.get('/dashboard_data', function(data) {
+            // Replace the content of the plot container with the updated plot
+            $('#plot-container').html(data.plot1);
+            $('#agent-table-container').html(data.agent_table); // Add this line to update the agent table.
+        });
+    }, 10000);
+</script>
