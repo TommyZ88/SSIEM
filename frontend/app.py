@@ -6,9 +6,9 @@ from pandas import DataFrame
 
 app = Flask(__name__)
 
-es = Elasticsearch(['elasticsearch:9200'], 
-                   use_ssl=True, 
-                   verify_certs=False, 
+es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
+                   use_ssl=True,    
+                   verify_certs=False,
                    scheme="https", 
                    http_auth=('admin', 'admin'))
 
@@ -26,6 +26,10 @@ def dashboard_data():
     plot1 = create_alert_level_over_time_plot()
     agent_table = create_agent_info_table()
     return jsonify(plot1=plot1.to_html(full_html=False), agent_table=agent_table)
+
+@app.route('/management') #account management page
+def management():
+    return render_template('management.html')
 
 
 def create_alert_level_over_time_plot():
