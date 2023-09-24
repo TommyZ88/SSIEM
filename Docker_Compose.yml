@@ -80,6 +80,8 @@ services:
       - "5000:5000"
     depends_on:
       - elasticsearch
+    volumes:
+      - ./frontend:/frontend
 
 #  grafana:
 #    image: grafana/grafana:latest
