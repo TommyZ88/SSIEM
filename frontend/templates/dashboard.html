@@ -1,18 +1,18 @@
 <!doctype html>
 <title>Dashboard</title>
-<div>
-    <h2>Alert Level Over Time</h2>
-    {{ plot1|safe }}
-</div>
 <div id="table-container">
     <h2>Agent Information</h2>
     {{ agent_table|safe }}
 </div>
-<br>
+<div id="pie-chart-container">
+    <h2>Alerts by Severity</h2>
+    {{ alert_pie_chart|safe }}
+</div>
 <div>
     <h2>Number of Alerts per Agent</h2>
     {{ plot2|safe }}
 </div>
+</body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
