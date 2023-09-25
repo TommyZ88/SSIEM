@@ -8,6 +8,10 @@
     <h2>Alerts by Severity</h2>
     {{ alert_pie_chart|safe }}
 </div>
+<div id="bar-chart-container">
+    <h2>Authentication Failures Over Time</h2>
+    {{ auth_failure_bar_chart|safe }}
+</div>
 <div>
     <h2>Number of Alerts per Agent</h2>
     {{ plot2|safe }}
