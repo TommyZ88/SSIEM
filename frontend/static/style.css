@@ -14,8 +14,7 @@ body {
 
 .siem-heading {
     color: #104766;
-    text-align: left;
-    padding: 10px 0;
+    text-align: center;
 }
 .siem-heading {
     margin: 0;
@@ -27,6 +26,13 @@ body, ul, li {
    margin: 0;
    padding: 0;
    list-style: none;
+}
+.content {
+    padding-bottom: 10px;
+    color: #104766;/* Adjust this value to match the footer's height */
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5em;
 }
 
 /* Style the header (navigation bar) */
@@ -76,6 +82,37 @@ nav a:hover {
     color: #fff;
 }
 
+/* Add a class to style the active link */
+.navbar a.active {
+    background-color: #104766;
+}
+
+.team-section {
+display: flex;
+justify-content: space-around;
+align-items: center;
+padding: 20px;
+}
+
+.team-member {
+text-align: center;
+margin: 20px;
+}
+
+.team-member img {
+max-width: 200px;
+border-radius: 50%;
+}
+
+.team-member h2 {
+font-size: 1.5em;
+margin: 10px 0;
+}
+
+.team-member p {
+font-size: 1.2em;
+color: #777;
+}
 /* Style the footer */
 footer {
 position: fixed;
