@@ -25,16 +25,16 @@
             </ul>
         </nav>
         </header>
-    </div>
-    <div>
-        <h2>Hosts againt Attacks Bar Chart</h2>
-        {{ bar_chart_showing_hosts|safe }}
-    </div>    
+    </div>   
     
     <body>
         <div id="table-container">
             <h2>Agent Information</h2>
             {{ agent_table|safe }}
+        </div>
+        <div>
+            <h2>Number of Alerts per Agent</h2>
+            {{ plot2|safe }}
         </div>
         <div id="pie-chart-container">
             <h2>Alerts by Severity</h2>
@@ -45,24 +45,12 @@
             {{ auth_failure|safe }}
         </div>
         <div>
-            <h2>Number of Alerts per Agent</h2>
-            {{ plot2|safe }}
-        </div>
+            <h2>Hosts againt Attacks Bar Chart</h2>
+            {{ bar_chart_showing_hosts|safe }}
+        </div> 
+        <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
     </body>
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Set interval to refresh plot every 10 seconds (10000 milliseconds)
-        setInterval(function(){
-            // Send AJAX GET request to the Flask route to get updated plot
-            $.get('/dashboard_data', function(data) {
-                // Replace the content of the plot container with the updated plot
-                $('#plot-container').html(data.plot1);
-                $('#plot2-container').html(data.plot2);
-                $('#agent-table-container').html(data.agent_table); // Add this line to update the agent table.
-            });
-        }, 10000);
-    </script>
 </html>
 
 

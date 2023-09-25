@@ -5,6 +5,7 @@ from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from elasticsearch import Elasticsearch
 import plotly.io as pio
+import traceback
 
 from visualisations.alert_pie_chart import create_alert_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
@@ -36,6 +37,7 @@ class LoginForm(FlaskForm):
 def home():
     return render_template('home.html')
 
+
 #Login Page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -56,30 +58,37 @@ def test_es_connection():
     except Exception as e:
         return str(e)
 
+
 @app.route('/management') #account management page
 def management():
     return render_template('management.html')
 
+
 @app.route('/dashboard')
 def dashboard():
-    plot2 = create_alerts_per_agent_plot(es)
     agent_table = create_agent_info_table(es)
+    plot2 = create_alerts_per_agent_plot(es)  
     alert_severity = create_alert_pie_chart(es)
     auth_failure = create_auth_failure_bar_chart(es)
     bar_chart_showing_hosts = create_bar_chart(es)
     return render_template('dashboard.html',
                            agent_table=agent_table,
+                           plot2=plot2, 
                            alert_severity=alert_severity,
                            auth_failure=auth_failure,
-                           plot2=plot2, bar_chart_showing_hosts = bar_chart_showing_hosts)
+                           bar_chart_showing_hosts = bar_chart_showing_hosts)
 
 
 
 @app.route('/dashboard_data')
 def dashboard_data():
-    plot2 = create_alerts_per_agent_plot(es)
-    agent_table = create_agent_info_table(es)
-    return jsonify(plot2=plot2.to_html(full_html=False))
+    try:
+        agent_table = create_agent_info_table(es)
+        return jsonify(agent_table=agent_table)
+    except Exception as e:
+        print(f"Error: {e}")  # This will print the error message to the console.
+        print(traceback.format_exc())  # This will print the full stack trace.
+        return jsonify(error=str(e)), 500  # Return a 500 status code with the error message.
 
 
 if __name__ == '__main__':
