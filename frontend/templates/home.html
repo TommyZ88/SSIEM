@@ -1,25 +1,156 @@
 <!doctype html>
+
 <title>Home page</title>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">  -->
+
+    <style>
+        body {
+            font-family: comic-sans, Calibri, Arial;
+        }
+
+        .SIEM {
+            background-color: #104766;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .SIEM h2 {
+            margin: 0;
+        }
+
+        .siem-heading {
+            color: #104766;
+            text-align: left;
+            padding: 10px 0;
+        }
+        .siem-heading {
+            margin: 0;
+        }
+        
+
+        /* Reset some default styles */
+        body, ul, li {
+           margin: 0;
+           padding: 0;
+           list-style: none;
+        }
+
+/* Style the header (navigation bar) */
+header {
+    background-color: #a6a6a6;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.navbar-logo {
+            float: left;
+            padding: 10px;
+}
+
+.navbar-logo img {
+            width: 50px; /* width of the logo */
+            height: auto; /* aspect ratio */
+}
+
+nav ul {
+    text-align: right;
+}
+
+nav li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000;
+}
+
+  /* Style the navigation links as buttons */
+  nav a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #a6a6a6; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: #104766; /* Button background color on hover */
+            color: #fff;
+        }
+
+/* Add a class to style the active link */
+        .navbar a.active {
+            background-color: #104766;
+        }
+/* Style the footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #a6a6a6;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Apply additional styling as needed for your website content */
+main {
+    padding: 20px;
+}
+
+    </style>
 </head>
 
-<!--navigation bar-->
-<header>
-    <nav>
+<body>
+    
+        <div class="SIEM">
+            <h2>Security Information and Event Management System</h2>
+        </div>
+        <div class="navbar">
+            <div class="navbar-logo">
+                <img src="images/bad_security.png" alt="Bad Security Inc Logo">
+                <img src="images/swinburne_logo.png" alt="Swinburne Logo">
+            </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a class="active" href="home">Home</a></li>
+                <li><a href="dashboard">Dashboard</a></li>
+                <li><a href="management">Management</a></li>
+            </ul>
+        </nav>
+    </header>
+
+   
+    <main>
+        <div class="siem-heading">
+            <h1>Welcome to the Simple SIEM System</h1>
+        </div>
+        <p>Our SIEM (Security Information and Event Management) system is designed to keep your digital assets safe and sound.</p>
+    
+        <h2>What is SIEM?</h2>
+        <p>SIEM stands for Security Information and Event Management. It's a robust tool that provides real-time monitoring, detection, and response to security threats, offering you complete peace of mind.</p>
+        
+        <h2>Key Features</h2>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Management</a></li>
+            <li>Real-time Threat Detection</li>
+            <li>Log and Event Correlation</li>
+            <li>Incident Response</li>
+            <li>Compliance Management</li>
+            <li>User Behavior Analysis</li>
         </ul>
-    </nav>
-</header>
+        
+    </main>
 
-<div>
-    <h2>Welcome to Simple Security Information and Event Management System</h2>
-</div>
+    <footer>
+        <p>&copy; 2023 SIEM for Bad Security Inc. All rights reserved.</p>
+    </footer>
+</body>
 
-<!-- footer-->
-<footer>
-    <p>&copy; 2023 Your Website Name. All rights reserved.</p>
-</footer>

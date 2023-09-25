@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, url_for
 from elasticsearch import Elasticsearch
 import plotly.io as pio
 
@@ -17,6 +17,7 @@ es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
                    http_auth=('admin', 'admin'))
 
 pio.renderers.default = 'browser'  # set the default renderer to browser
+
 
 @app.route('/home') #home page
 def home():
