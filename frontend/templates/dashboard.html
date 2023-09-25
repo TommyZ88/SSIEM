@@ -1,145 +1,62 @@
 <!doctype html>
-<title>Dashboard</title>
 
-<style>
-    body {
-        font-family: comic-sans, Calibri, Arial;
-    }
+<html>
+    <head>
+        <title>Dashboard</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../static/style.css">
+    </head>
 
-    .SIEM {
-        background-color: #104766;
-        color: #fff;
-        text-align: center;
-        padding: 10px 0;
-    }
-    .SIEM h2 {
-        margin: 0;
-    }
-    
-
-    /* Reset some default styles */
-    body, ul, li {
-       margin: 0;
-       padding: 0;
-       list-style: none;
-    }
-
-/* Style the header (navigation bar) */
-header {
-background-color: #a6a6a6;
-color: #fff;
-padding: 10px 0;
-}
-
-.navbar-logo {
-        float: left;
-        padding: 10px;
-}
-
-.navbar-logo img {
-        width: 50px; /* width of the logo */
-        height: auto; /* aspect ratio */
-}
-
-nav ul {
-text-align: right;
-}
-
-nav li {
-display: inline;
-margin: 0 20px;
-}
-
-nav a {
-text-decoration: none;
-color: #000;
-}
-
-/* Style the navigation links as buttons */
-nav a {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #a6a6a6; /* Button background color */
-        color: #fff; /* Button text color */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    nav a:hover {
-        background-color: #104766; /* Button background color on hover */
-        color: #fff;
-    }
-
-    /* Add a class to style the active link */
-    .navbar a.active {
-            background-color: #104766;
-        }
-
-/* Style the footer */
-footer {
-position: fixed;
-bottom: 0;
-left: 0;
-width: 100%;
-background-color: #a6a6a6;
-color: #fff;
-text-align: center;
-padding: 10px 0;
-}
-
-/* Apply additional styling as needed for your website content */
-main {
-padding: 20px;
-}
-</style>
-
-<div class="SIEM">
-    <h2>Security Information and Event Management System</h2>
-</div>
-<div class="navbar">
-    <div class="navbar-logo">
-        <img src="images/bad_security.png" alt="Bad Security Inc Logo">
-        <img src="images/swinburne_logo.png" alt="Swinburne Logo">
+    <div class="SIEM">
+        <h2>Security Information and Event Management System</h2>
     </div>
-<header>
-<nav>
-    <ul>
-        <li><a href="home">Home</a></li>
-        <li><a class="active" href="dashboard">Dashboard</a></li>
-        <li><a href="management">Management</a></li>
-    </ul>
-</nav>
-</header>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="images/bad_security.png" alt="Bad Security Inc Logo">
+            <img src="images/swinburne_logo.png" alt="Swinburne Logo">
+        </div>
+    <header>
+    <nav>
+        <ul>
+            <li><a href="home">Home</a></li>
+            <li><a class="active" href="dashboard">Dashboard</a></li>
+            <li><a href="management">Management</a></li>
+        </ul>
+    </nav>
+    </header>
+    
+    <body>
+        <div id="table-container">
+            <h2>Agent Information</h2>
+            {{ agent_table|safe }}
+        </div>
+        <div id="pie-chart-container">
+            <h2>Alerts by Severity</h2>
+            {{ alert_severity|safe }}
+        </div>
+        <div id="bar-chart-container">
+            <h2>Authentication Failures Over Time</h2>
+            {{ auth_failure|safe }}
+        </div>
+        <div>
+            <h2>Number of Alerts per Agent</h2>
+            {{ plot2|safe }}
+        </div>
+    </body>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Set interval to refresh plot every 10 seconds (10000 milliseconds)
+        setInterval(function(){
+            // Send AJAX GET request to the Flask route to get updated plot
+            $.get('/dashboard_data', function(data) {
+                // Replace the content of the plot container with the updated plot
+                $('#plot-container').html(data.plot1);
+                $('#plot2-container').html(data.plot2);
+                $('#agent-table-container').html(data.agent_table); // Add this line to update the agent table.
+            });
+        }, 10000);
+    </script>
+</html>
 
-<div id="table-container">
-    <h2>Agent Information</h2>
-    {{ agent_table|safe }}
-</div>
-<div id="pie-chart-container">
-    <h2>Alerts by Severity</h2>
-    {{ alert_severity|safe }}
-</div>
-<div id="bar-chart-container">
-    <h2>Authentication Failures Over Time</h2>
-    {{ auth_failure|safe }}
-</div>
-<div>
-    <h2>Number of Alerts per Agent</h2>
-    {{ plot2|safe }}
-</div>
-</body>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    // Set interval to refresh plot every 10 seconds (10000 milliseconds)
-    setInterval(function(){
-        // Send AJAX GET request to the Flask route to get updated plot
-        $.get('/dashboard_data', function(data) {
-            // Replace the content of the plot container with the updated plot
-            $('#plot-container').html(data.plot1);
-            $('#plot2-container').html(data.plot2);
-            $('#agent-table-container').html(data.agent_table); // Add this line to update the agent table.
-        });
-    }, 10000);
-</script>
