@@ -6,6 +6,10 @@ from pandas import DataFrame
 import pandas as pd
 from datetime import datetime, timedelta
 
+from visualisations import (agent_info_table, alert_pie_chart,
+    auth_failure_bar_chart, alerts_per_agent_plot
+)
+
 app = Flask(__name__)
 
 es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
@@ -34,171 +38,22 @@ def management():
 
 @app.route('/dashboard')
 def dashboard():
-    plot2 = create_alerts_per_agent_plot()
-    agent_table = create_agent_info_table()  
-    alert_pie_chart = create_alert_pie_chart()
-    auth_failure_bar_chart = create_auth_failure_bar_chart()
-    return render_template('dashboard.html', 
+    plot2 = alerts_per_agent_plot.create_alerts_per_agent_plot(es)
+    agent_table = agent_info_table.create_agent_info_table(es)
+    alert_severity = alert_pie_chart.create_alert_pie_chart(es)
+    auth_failure = auth_failure_bar_chart.create_auth_failure_bar_chart(es)
+    return render_template('dashboard.html',
                            agent_table=agent_table,
-                           alert_pie_chart=alert_pie_chart,
-                           auth_failure_bar_chart=auth_failure_bar_chart,
-                           plot2=plot2) 
+                           alert_severity=alert_severity,
+                           auth_failure=auth_failure,
+                           plot2=plot2)
 
 
 @app.route('/dashboard_data')
 def dashboard_data():
-    plot2 = create_alerts_per_agent_plot()
-    agent_table = create_agent_info_table()
+    plot2 = alerts_per_agent_plot.create_alerts_per_agent_plot(es)
+    agent_table = agent_table = agent_info_table.create_agent_info_table(es)
     return jsonify(plot2=plot2.to_html(full_html=False))
-
-
-def create_agent_info_table():
-    body = {"size": 1000} 
-    res = es.search(index="wazuh-monitoring-*", body=body)
-    agents = res['hits']['hits']
-    seen_agent_ids = set() 
-
-    table_data = []
-    for agent in agents:
-        source = agent["_source"]
-        agent_id = source.get("id", "")
-
-        if agent_id in seen_agent_ids:
-            continue
-
-        name = source.get("name", "")
-        ip = source.get("ip", "")
-        status = source.get("status", "")
-        
-        table_data.append([agent_id, name, ip, status])
-        seen_agent_ids.add(agent_id)
-
-    df = DataFrame(table_data, columns=["Agent ID", "Name", "IP", "Status"])
-    return df.to_html(index=False, classes='table table-striped')
-
-
-def create_alert_pie_chart():
-    today = datetime.utcnow()
-    start_of_today = today.replace(hour=0, minute=0, second=0, microsecond=0)
-    body = {
-        "size": 0,
-        "query": {
-            "range": {
-                "@timestamp": {
-                    "gte": start_of_today
-                }
-            }
-        },
-        "aggs": {
-            "severity_count": {
-                "terms": {"field": "rule.level"}
-            }
-        }
-    }
-    res = es.search(index="wazuh-alerts-*", body=body)
-    buckets = res['aggregations']['severity_count']['buckets']
-
-    labels = [str(bucket['key']) for bucket in buckets]
-    values = [bucket['doc_count'] for bucket in buckets]
-
-    fig = px.pie(values=values, names=labels)
-    return fig.to_html(full_html=False)
-
-
-def create_auth_failure_bar_chart():
-    body = {
-        "size": 0,
-        "aggs": {
-            "auth_failures_over_time": {
-                "date_histogram": {"field": "@timestamp", "fixed_interval": "10m"},
-                "aggs": {"auth_failures": {"terms": {"field": "rule.description", "include": ["Authentication failure"]}}}
-            }
-        }
-    }
-    res = es.search(index="wazuh-alerts-*", body=body)
-    buckets = res['aggregations']['auth_failures_over_time']['buckets']
-    
-    if not buckets:
-        return "No data available"
-    
-    start_time = datetime.fromisoformat(buckets[0]['key_as_string'].replace('Z', '+00:00'))
-    end_time = datetime.fromisoformat(buckets[-1]['key_as_string'].replace('Z', '+00:00'))
-    
-    time_intervals = []
-    current_time = start_time
-    while current_time <= end_time:
-        time_intervals.append(current_time)
-        current_time += timedelta(minutes=15)
-
-    timestamps = []
-    counts = []
-    for time_interval in time_intervals:
-        bucket = next((bucket for bucket in buckets if datetime.fromisoformat(bucket['key_as_string'].replace('Z', '+00:00')) == time_interval), None)
-        
-        timestamps.append(time_interval.isoformat())
-        if bucket:
-            counts.append(bucket['doc_count'])
-        else:
-            counts.append(0)  
-    
-    fig = px.bar(x=timestamps, y=counts, labels={'x': 'Time', 'y': 'Failures Count'})
-    fig.update_layout(title='Authentication Failures Over Time')
-    return fig.to_html(full_html=False)
-
-
-
-
-def create_alerts_per_agent_plot():
-    # Define the Elasticsearch query body
-    # It includes aggregations to group data by agent.id and further group by dates
-    body = {
-        "size": 0,  # We set the size to 0 as we are interested in aggregation results only
-        "aggs": {
-            "alerts_per_agent": {
-                "terms": {"field": "agent.id.keyword"},  # Grouping by agent.id
-                "aggs": {
-                    "alerts_over_time": {
-                        "date_histogram": {"field": "@timestamp", "calendar_interval": "day"}  # Further grouping by dates
-                    }
-                }
-            }
-        }
-    }
-    
-    # Perform the search query on the specified Elasticsearch index
-    res = es.search(index="wazuh-alerts-*", body=body)
-    
-    # Extract the buckets from the aggregation results
-    buckets = res['aggregations']['alerts_per_agent']['buckets']
-    
-    # Initialize data dictionary to hold agent_id, dates, and counts
-    data = {
-        "agent_id": [],
-        "dates": [],
-        "counts": []
-    }
-    
-    # Iterate through each bucket and extract agent_id, dates, and counts
-    for bucket in buckets:
-        agent_id = bucket['key']  # The key of the bucket is the agent_id
-        dates = [item['key_as_string'] for item in bucket['alerts_over_time']['buckets']]  # Extract dates from nested buckets
-        counts = [item['doc_count'] for item in bucket['alerts_over_time']['buckets']]  # Extract document count for each nested bucket
-        
-        # Extend the lists in the data dictionary with the extracted data
-        data["agent_id"].extend([agent_id] * len(dates))
-        data["dates"].extend(dates)
-        data["counts"].extend(counts)
-    
-    # Convert the data dictionary to a pandas DataFrame
-    df = pd.DataFrame(data)
-    
-    # Create a line plot using plotly.express
-    fig = px.line(df, x='dates', y='counts', color='agent_id', title='Number of Alerts per Agent Over Time', labels={'dates': 'Date', 'counts': 'Number of Alerts'})
-    
-    # Return the plot as an HTML string
-    return fig.to_html(full_html=False)
-
-
 
 
 if __name__ == '__main__':
