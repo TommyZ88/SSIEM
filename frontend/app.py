@@ -1,4 +1,8 @@
 from flask import Flask, jsonify, render_template, url_for
+from flask_wtf import FlaskForm
+from flask_bootstrap import Bootstrap
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Email, Length
 from elasticsearch import Elasticsearch
 import plotly.io as pio
 
@@ -9,6 +13,8 @@ from visualisations.alerts_per_agent_plot import create_alerts_per_agent_plot
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'SecretKey'
+Bootstrap(app)
 
 es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
                    use_ssl=True,    
@@ -19,9 +25,27 @@ es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
 pio.renderers.default = 'browser'  # set the default renderer to browser
 
 
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+    password = StringField('Password', validators=[InputRequired(), Length(min=8, max=80)])
+    remember = BooleanField('Remember Me')
+
+
 @app.route('/home') #home page
 def home():
     return render_template('home.html')
+
+#Login Page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
+
+
+    return render_template('login.html', form=form)
+
 
 @app.route('/test_es')
 def test_es_connection():
