@@ -1,6 +1,11 @@
+from flask import Flask, jsonify, render_template
 from elasticsearch import Elasticsearch
 import plotly.express as px
-from datetime import datetime
+import plotly.io as pio
+from pandas import DataFrame
+import pandas as pd
+from datetime import datetime, timedelta
+
 
 def create_alert_pie_chart(es: Elasticsearch):
     today = datetime.utcnow()

@@ -6,11 +6,11 @@
 </div>
 <div id="pie-chart-container">
     <h2>Alerts by Severity</h2>
-    {{ alert_pie_chart|safe }}
+    {{ alert_severity|safe }}
 </div>
 <div id="bar-chart-container">
     <h2>Authentication Failures Over Time</h2>
-    {{ auth_failure_bar_chart|safe }}
+    {{ auth_failure|safe }}
 </div>
 <div>
     <h2>Number of Alerts per Agent</h2>

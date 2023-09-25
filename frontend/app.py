@@ -1,14 +1,12 @@
 from flask import Flask, jsonify, render_template
 from elasticsearch import Elasticsearch
-import plotly.express as px
 import plotly.io as pio
-from pandas import DataFrame
-import pandas as pd
-from datetime import datetime, timedelta
 
-from visualisations import (agent_info_table, alert_pie_chart,
-    auth_failure_bar_chart, alerts_per_agent_plot
-)
+from visualisations.alert_pie_chart import create_alert_pie_chart
+from visualisations.agent_info_table import create_agent_info_table
+from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
+from visualisations.alerts_per_agent_plot import create_alerts_per_agent_plot
+
 
 app = Flask(__name__)
 
@@ -38,10 +36,10 @@ def management():
 
 @app.route('/dashboard')
 def dashboard():
-    plot2 = alerts_per_agent_plot.create_alerts_per_agent_plot(es)
-    agent_table = agent_info_table.create_agent_info_table(es)
-    alert_severity = alert_pie_chart.create_alert_pie_chart(es)
-    auth_failure = auth_failure_bar_chart.create_auth_failure_bar_chart(es)
+    plot2 = create_alerts_per_agent_plot(es)
+    agent_table = create_agent_info_table(es)
+    alert_severity = create_alert_pie_chart(es)
+    auth_failure = create_auth_failure_bar_chart(es)
     return render_template('dashboard.html',
                            agent_table=agent_table,
                            alert_severity=alert_severity,
@@ -51,8 +49,8 @@ def dashboard():
 
 @app.route('/dashboard_data')
 def dashboard_data():
-    plot2 = alerts_per_agent_plot.create_alerts_per_agent_plot(es)
-    agent_table = agent_table = agent_info_table.create_agent_info_table(es)
+    plot2 = create_alerts_per_agent_plot(es)
+    agent_table = create_agent_info_table(es)
     return jsonify(plot2=plot2.to_html(full_html=False))
 
 
