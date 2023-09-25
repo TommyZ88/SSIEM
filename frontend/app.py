@@ -10,6 +10,7 @@ from visualisations.alert_pie_chart import create_alert_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
 from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
 from visualisations.alerts_per_agent_plot import create_alerts_per_agent_plot
+from visualisations.bar_chart import create_bar_chart
 
 
 app = Flask(__name__)
@@ -65,11 +66,13 @@ def dashboard():
     agent_table = create_agent_info_table(es)
     alert_severity = create_alert_pie_chart(es)
     auth_failure = create_auth_failure_bar_chart(es)
+    bar_chart_showing_hosts = create_bar_chart(es)
     return render_template('dashboard.html',
                            agent_table=agent_table,
                            alert_severity=alert_severity,
                            auth_failure=auth_failure,
-                           plot2=plot2)
+                           plot2=plot2, bar_chart_showing_hosts = bar_chart_showing_hosts)
+
 
 
 @app.route('/dashboard_data')
