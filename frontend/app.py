@@ -18,9 +18,9 @@ es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
 
 pio.renderers.default = 'browser'  # set the default renderer to browser
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+@app.route('/home') #home page
+def home():
+    return render_template('home.html')
 
 @app.route('/test_es')
 def test_es_connection():
