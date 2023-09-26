@@ -46,11 +46,10 @@ def create_distribution_of_alert_severity_plot(es: Elasticsearch):
     # Convert the data dictionary to a pandas DataFrame
     df = pd.DataFrame(data)
     
-    # Create a scatter plot using plotly.express
-    fig = px.scatter(df, x='timestamps', y='counts', color='severity', 
-                     labels={'timestamps': 'Time', 'counts': 'Alert Count', 'severity': 'Severity Level'},
-                     title='Distribution of Alert Severity Levels Over Time')
+    # Create a line chart using plotly.express
+    fig = px.line(df, x='timestamps', y='counts', color='severity', 
+                  labels={'timestamps': 'Time', 'counts': 'Alert Count', 'severity': 'Severity Level'},
+                  title='Distribution of Alert Severity Levels Over Time')
     
     # Return the plot as an HTML string
     return fig.to_html(full_html=False)
-

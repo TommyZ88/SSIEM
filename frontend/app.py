@@ -10,7 +10,7 @@ import traceback
 from visualisations.alert_pie_chart import create_alert_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
 from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
-#from visualisations.alerts_per_agent_plot import create_event_logs_table
+from visualisations.alerts_per_agent_line_chart import create_alerts_per_agent_line_chart
 from visualisations.bar_chart import create_bar_chart
 from visualisations.distribution_of_alert_severity_plot import create_distribution_of_alert_severity_plot
 from visualisations.event_logs_table import create_event_logs_table
@@ -69,7 +69,7 @@ def management():
 @app.route('/dashboard')
 def dashboard():
     agent_table = create_agent_info_table(es)
-    #alerts_per_agent = create_alerts_per_agent(es)  
+    alerts_per_agent = create_alerts_per_agent_line_chart(es)  
     alert_severity = create_alert_pie_chart(es)
     auth_failure = create_auth_failure_bar_chart(es)
     bar_chart_showing_hosts = create_bar_chart(es)
@@ -77,7 +77,7 @@ def dashboard():
     event_logs_table = create_event_logs_table(es)
     return render_template('dashboard.html',
                            agent_table=agent_table,
-                           #alerts_per_agent=alerts_per_agent, 
+                           alerts_per_agent=alerts_per_agent, 
                            alert_severity=alert_severity,
                            auth_failure=auth_failure,
                            bar_chart_showing_hosts = bar_chart_showing_hosts,
