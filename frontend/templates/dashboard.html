@@ -52,6 +52,23 @@
             <h2>Hosts Against Attacks Bar Chart</h2>
             {{ bar_chart_showing_hosts|safe }}
         </div> 
+        <div>
+            <h2>Event Logs</h2>
+            <div id="event-logs-table">
+                {{ event_logs_table|safe }}
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function fetchEventLogsTable() {
+                $.get('/event_logs_table', function(data) {
+                    $('#event-logs-table').html(data);
+                });
+            }
+        
+            fetchEventLogsTable();
+            setInterval(fetchEventLogsTable, 5000);
+        </script>
         <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
     </body>
     

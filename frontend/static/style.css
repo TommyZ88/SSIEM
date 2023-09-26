@@ -131,3 +131,14 @@ padding: 10px 0;
 main {
 padding: 20px;
 }
+
+#event-logs-table {
+    max-height: 300px; /* Adjust as needed */
+    overflow-y: auto;
+}
+#event-logs-table th {
+    position: sticky;
+    top: 0;
+    background-color: #ffffff; /* Change according to your design */
+    z-index: 1;
+}
