@@ -82,13 +82,8 @@ def dashboard():
 
 @app.route('/dashboard_data')
 def dashboard_data():
-    try:
-        agent_table = create_agent_info_table(es)
-        return jsonify(agent_table=agent_table)
-    except Exception as e:
-        print(f"Error: {e}")  # This will print the error message to the console.
-        print(traceback.format_exc())  # This will print the full stack trace.
-        return jsonify(error=str(e)), 500  # Return a 500 status code with the error message.
+    agent_table = create_agent_info_table(es)
+    return jsonify(agent_table=agent_table)
 
 
 if __name__ == '__main__':
