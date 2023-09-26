@@ -113,7 +113,8 @@ margin: 10px 0;
 font-size: 1.2em;
 color: #777;
 }
-/* Style the footer */
+
+/* footer */
 footer {
 position: fixed;
 bottom: 0;
@@ -125,7 +126,7 @@ text-align: center;
 padding: 10px 0;
 }
 
-/* Apply additional styling as needed for your website content */
+/* for additional styling */
 main {
 padding: 20px;
 }
