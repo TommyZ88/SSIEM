@@ -33,8 +33,12 @@
             {{ agent_table|safe }}
         </div>
         <div>
-            <h2>Number of Alerts per Agent</h2>
-            {{ plot2|safe }}
+            <h2>Number of Alerts Per Agent</h2>
+            {{ alerts_per_agent|safe }}
+        </div>
+        <div>
+            <h2>Distribution of Alert Severity Levels Over Time</h2>
+            {{ distribution_alert_severity|safe }}
         </div>
         <div id="pie-chart-container">
             <h2>Alerts by Severity</h2>
@@ -45,7 +49,7 @@
             {{ auth_failure|safe }}
         </div>
         <div>
-            <h2>Hosts againt Attacks Bar Chart</h2>
+            <h2>Hosts Against Attacks Bar Chart</h2>
             {{ bar_chart_showing_hosts|safe }}
         </div> 
         <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
