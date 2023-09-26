@@ -83,7 +83,7 @@ nav a:hover {
 }
 
 /* Add a class to style the active link */
-.navbar a.active {
+nav a.active {
     background-color: #104766;
 }
 
