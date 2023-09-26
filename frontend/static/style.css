@@ -10,6 +10,7 @@ body {
 }
 .SIEM h2 {
     margin: 0;
+    padding: 20px;
 }
 
 .siem-heading {
