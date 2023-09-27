@@ -32,11 +32,11 @@
             <h2>Agent Information</h2>
             {{ agent_table|safe }}
         </div>
-        <div>
+        <div id="table-container">
             <h2>Number of Alerts Per Agent</h2>
             {{ alerts_per_agent|safe }}
         </div>
-        <div>
+        <div id="table-container">
             <h2>Distribution of Alert Severity Levels Over Time</h2>
             {{ distribution_alert_severity|safe }}
         </div>
@@ -48,11 +48,11 @@
             <h2>Authentication Failures Over Time</h2>
             {{ auth_failure|safe }}
         </div>
-        <div>
+        <div id="table-container">
             <h2>Hosts Against Attacks Bar Chart</h2>
             {{ bar_chart_showing_hosts|safe }}
         </div> 
-        <div>
+        <div id="table-container">
             <h2>Event Logs</h2>
             <div id="event-logs-table">
                 {{ event_logs_table|safe }}

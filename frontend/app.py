@@ -34,8 +34,8 @@ class LoginForm(FlaskForm):
     password = StringField('Password', validators=[InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('Remember Me')
 
-
-@app.route('/home') #home page
+#Home page
+@app.route('/home') 
 def home():
     return render_template('home.html')
 
@@ -61,7 +61,8 @@ def test_es_connection():
         return str(e)
 
 
-@app.route('/management') #account management page
+#Account management page
+@app.route('/management') 
 def management():
     return render_template('management.html')
 
@@ -84,7 +85,7 @@ def dashboard():
                            distribution_alert_severity = distribution_alert_severity,
                            event_logs_table = event_logs_table)
 
-
+#Dashboard page
 @app.route('/dashboard_data')
 def dashboard_data():
     agent_table = create_agent_info_table(es)
