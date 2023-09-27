@@ -46,6 +46,9 @@ padding: 10px 0;
 .navbar-logo {
     float: left;
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar-logo img {
