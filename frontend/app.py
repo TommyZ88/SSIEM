@@ -5,7 +5,6 @@ from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from elasticsearch import Elasticsearch
 import plotly.io as pio
-import traceback
 
 from visualisations.alert_pie_chart import create_alert_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
@@ -48,7 +47,6 @@ def login():
     if form.validate_on_submit():
         return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
 
-
     return render_template('login.html', form=form)
 
 
@@ -89,7 +87,11 @@ def dashboard():
 @app.route('/dashboard_data')
 def dashboard_data():
     agent_table = create_agent_info_table(es)
-    return jsonify(agent_table=agent_table)
+    alert_severity = create_alert_pie_chart(es)
+    event_logs_table = create_event_logs_table(es)
+    return jsonify(agent_table=agent_table, 
+                   alert_severity=alert_severity,
+                   event_logs_table = event_logs_table)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=int(5000), debug=True)

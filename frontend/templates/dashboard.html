@@ -41,7 +41,6 @@
             {{ distribution_alert_severity|safe }}
         </div>
         <div id="pie-chart-container">
-            <h2>Alerts by Severity</h2>
             {{ alert_severity|safe }}
         </div>
         <div id="bar-chart-container">
@@ -52,23 +51,12 @@
             <h2>Hosts Against Attacks Bar Chart</h2>
             {{ bar_chart_showing_hosts|safe }}
         </div> 
-        <div id="table-container">
+        <div id="table-container2">
             <h2>Event Logs</h2>
             <div id="event-logs-table">
                 {{ event_logs_table|safe }}
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            function fetchEventLogsTable() {
-                $.get('/event_logs_table', function(data) {
-                    $('#event-logs-table').html(data);
-                });
-            }
-        
-            fetchEventLogsTable();
-            setInterval(fetchEventLogsTable, 5000);
-        </script>
         <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
     </body>
     
