@@ -1,9 +1,11 @@
-from flask import Flask, jsonify, render_template, url_for
+from flask import Flask, jsonify, render_template, url_for, redirect, flash, session
 from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length
+from wtforms.validators import InputRequired, Length
 from elasticsearch import Elasticsearch
+from flask_session import Session
+
 import plotly.io as pio
 
 from visualisations.alert_pie_chart import create_alert_pie_chart
@@ -13,10 +15,15 @@ from visualisations.alerts_per_agent_line_chart import create_alerts_per_agent_l
 from visualisations.bar_chart import create_bar_chart
 from visualisations.distribution_of_alert_severity_plot import create_distribution_of_alert_severity_plot
 from visualisations.event_logs_table import create_event_logs_table
+from data.login_data import authenticate_user
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SecretKey'
+app.config['SECRET_KEY'] = 'SecretKey'
+app.config['SESSION_TYPE'] = 'filesystem'  # Use filesystem session
+app.config['SESSION_PERMANENT'] = False
+Session(app)
 Bootstrap(app)
 
 es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
@@ -43,10 +50,15 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-
     if form.validate_on_submit():
-        return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
-
+        username = form.username.data
+        password = form.password.data
+        if authenticate_user(es, username, password):
+            session['username'] = username
+            flash('Login successful.', 'success')
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid username or password', 'danger')
     return render_template('login.html', form=form)
 
 

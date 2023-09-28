@@ -1,15 +1,15 @@
 from elasticsearch import Elasticsearch
 
-def login_data(es: Elasticsearch):
-
-  res = es.search(index="login-management-*")
-  buckets = res['username']['password']
-
-  labels = [str(bucket['key']) for bucket in buckets]
-  values = [bucket['doc_count'] for bucket in buckets]
-
-  return(labels, values)
-
-
-
-    
+def authenticate_user(es: Elasticsearch, username: str, password: str) -> bool:
+    body = {
+        "query": {
+            "bool": {
+                "must": [
+                    {"match": {"username": username}},
+                    {"match": {"password": password}}
+                ]
+            }
+        }
+    }
+    res = es.search(index="login-management", body=body)
+    return res['hits']['total']['value'] > 0  # returns True if user found else False

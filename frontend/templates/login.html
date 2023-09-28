@@ -2,6 +2,13 @@
 <link rel="stylesheet" type="text/css" href="../static/styles/login.css">
 
 <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}   
     <img src="../static/images/bad_security.png" alt="Bad Security Inc Logo" id="bad_security">
 
     <form class="form-signin" method="POST" action="/login">
