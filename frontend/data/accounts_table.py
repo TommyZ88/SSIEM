@@ -1,2 +1,0 @@
-from elasticsearh import Elasticsearch
-
