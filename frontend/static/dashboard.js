@@ -3,7 +3,7 @@ function updateDashboardData() {
         .then(response => response.json())
         .then(data => {
             if (data.agent_table) {
-                document.getElementById('table-container').innerHTML = data.agent_table;
+                document.getElementById('agent-information').innerHTML = "<h2>Agent Information</h2>" + data.agent_table;
             } else {
                 console.error('agent_table is undefined in the response');
             }
@@ -16,7 +16,7 @@ function updateDashboardData() {
             }
 
             if (data.event_logs_table) {
-                document.getElementById('event-logs-table').innerHTML = data.event_logs_table;
+                document.getElementById('event-logs').innerHTML = "<h2>Event Logs</h2>" + data.event_logs_table;
             } else {
                 console.error('event_logs_table is undefined in the response');
             }

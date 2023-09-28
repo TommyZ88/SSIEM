@@ -135,21 +135,22 @@ main {
 padding: 20px;
 }
 
-#event-logs-table {
+#event-logs {
     max-height: 300px; /* Adjust as needed */
     overflow-y: auto;
 }
-#event-logs-table th {
+#event-logs th {
     position: sticky;
     top: 0;
     background-color: #ffffff; /* Change according to your design */
     z-index: 1;
 }
 
+#agent-information,
+#event-logs,
 #table-container,
 #pie-chart-container,
-#bar-chart-container,
-#event-logs-table {
+#bar-chart-container{
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;

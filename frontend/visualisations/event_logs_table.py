@@ -6,7 +6,12 @@ def create_event_logs_table(es: Elasticsearch):
     # Define the search query to retrieve 1000 log entries, sorted by timestamp in descending order
     body = {
         "size": 1000,
-        "query": {"match_all": {}},
+        "query": {
+            "bool": {
+                "must": {"match_all": {}},
+                "must_not": {"term": {"agent.id": "000"}}
+            }
+        },
         "sort": [{"@timestamp": "desc"}]
     }
     
