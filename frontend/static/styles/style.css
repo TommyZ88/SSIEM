@@ -151,7 +151,8 @@ padding: 20px;
 #event-logs,
 #table-container,
 #pie-chart-container,
-#bar-chart-container{
+#bar-chart-container,
+#donut-chart-container {
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
