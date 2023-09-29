@@ -9,10 +9,13 @@ def create_alert_pie_chart(es: Elasticsearch):
     body = {
         "size": 0,
         "query": {
-            "range": {
-                "@timestamp": {
-                    "gte": start_of_today
-                }
+            "bool": {
+                "must": [
+                    {"range": {"@timestamp": {"gte": start_of_today}}}
+                ],
+                "must_not": [
+                    {"term": {"agent.id": "000"}}
+                ]
             }
         },
         "aggs": {
@@ -27,5 +30,17 @@ def create_alert_pie_chart(es: Elasticsearch):
     labels = [str(bucket['key']) for bucket in buckets]
     values = [bucket['doc_count'] for bucket in buckets]
 
-    fig = px.pie(values=values, names=labels)
+    fig = px.pie(values=values, names=labels, color_discrete_sequence=px.colors.sequential.Plasma)
+    
+    hover_template = "<b>Severity: %{label}</b><br>Count: %{value}<extra></extra>"
+    fig.update_traces(textinfo='percent+label', pull=[0.1, 0.1, 0.1, 0.1], hovertemplate=hover_template)
+    
+    fig.update_layout(title_text='Alert Severity',
+                      title_x=0.5,
+                      font=dict(family="Arial, sans-serif", size=12, color="RebeccaPurple"),
+                      legend=dict(x=0, y=1, traceorder='normal', orientation='h',
+                                  font=dict(family="Arial, sans-serif", size=10, color="black"),
+                                  bgcolor="LightSteelBlue", itemclick='toggleothers'),
+                      legend_title_text='Severity')
+    
     return fig.to_html(full_html=False)

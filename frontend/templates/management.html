@@ -4,7 +4,7 @@
     <head>
         <title>Account Management</title>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" type="text/css" href="../static/style.css">
+        <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
     </head>
 
     <div class="SIEM" id="SIEM-test">
@@ -12,8 +12,8 @@
     </div>
     <div class="navbar">
         <div class="navbar-logo">
-            <img src="../static/bad_security.png" alt="Bad Security Inc Logo">
-            <img src="../static/swinburne_logo.png" alt="Swinburne Logo">
+            <img src="../static/styles/bad_security.png" alt="Bad Security Inc Logo">
+            <img src="../static/styles/swinburne_logo.png" alt="Swinburne Logo">
         </div>
     
         <header>
@@ -27,4 +27,25 @@
             </nav>
         </header>
     </div>
+
+    <body>
+        <div id="table-container">
+            <table id="accountTable">
+                <thead>
+                    <tr>
+                        <th>Index</th>
+                        <th>Account</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+    
+                </tbody>
+            </table>
+
+            <button id="addUser">Add User</button>
+            <button id="deleteUser">Remove User</button>
+        </div>
+    </body>
 </html>
