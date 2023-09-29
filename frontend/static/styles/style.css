@@ -136,14 +136,15 @@ padding: 20px;
 }
 
 #event-logs {
-    max-height: 300px; /* Adjust as needed */
+    max-height: 300px;
     overflow-y: auto;
 }
-#event-logs th {
+#event-logs h2, th {
     position: sticky;
     top: 0;
-    background-color: #ffffff; /* Change according to your design */
+    background-color: #ffffff;
     z-index: 1;
+    color: #333;
 }
 
 #agent-information,
