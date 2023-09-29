@@ -15,6 +15,7 @@ from visualisations.alerts_per_agent_line_chart import create_alerts_per_agent_l
 from visualisations.bar_chart import create_bar_chart
 from visualisations.distribution_of_alert_severity_plot import create_distribution_of_alert_severity_plot
 from visualisations.event_logs_table import create_event_logs_table
+from visualisations.mitre_attacks_donut_chart import create_top_mitre_attacks_donut_chart
 from data.login_data import authenticate_user
 
 
@@ -86,6 +87,7 @@ def dashboard():
     bar_chart_showing_hosts = create_bar_chart(es)
     distribution_alert_severity = create_distribution_of_alert_severity_plot(es)
     event_logs_table = create_event_logs_table(es)
+    mitre_attacks = create_top_mitre_attacks_donut_chart(es)
     return render_template('dashboard.html',
                            agent_table=agent_table,
                            alerts_per_agent=alerts_per_agent, 
@@ -93,7 +95,8 @@ def dashboard():
                            auth_failure=auth_failure,
                            bar_chart_showing_hosts = bar_chart_showing_hosts,
                            distribution_alert_severity = distribution_alert_severity,
-                           event_logs_table = event_logs_table)
+                           event_logs_table = event_logs_table,
+                           mitre_attacks = mitre_attacks)
 
 #Dashboard page
 @app.route('/dashboard_data')

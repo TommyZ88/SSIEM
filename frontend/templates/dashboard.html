@@ -40,6 +40,9 @@
             <h2>Distribution of Alert Severity Levels Over Time</h2>
             {{ distribution_alert_severity|safe }}
         </div>
+        <div id="donut-chart-container">
+            {{ mitre_attacks|safe }}
+        </div>
         <div id="pie-chart-container">
             {{ alert_severity|safe }}
         </div>
