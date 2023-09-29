@@ -41,7 +41,12 @@
             {{ distribution_alert_severity|safe }}
         </div>
         <div id="donut-chart-container">
+            <h2>Top MITRE ATT&CKS</h2>
             {{ mitre_attacks|safe }}
+        </div>
+        <div id="donut-chart-container">
+            <h2>Top 5 Events</h2>
+            {{ top_events|safe }}
         </div>
         <div id="pie-chart-container">
             {{ alert_severity|safe }}
