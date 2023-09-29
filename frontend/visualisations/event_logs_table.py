@@ -37,13 +37,13 @@ def create_event_logs_table(es: Elasticsearch):
         
         # Append the extracted information to the table_data list
         table_data.append({
+            "Timestamp": timestamp,
             "Agent Name": agent_name,
             "IP Address": agent_ip,
-            "Timestamp": timestamp,
             "Event": source.get("rule", {}).get("description", ""),
             "Severity": source.get("rule", {}).get("level", "")
         })
     
     # Convert the table_data list to a DataFrame and then to an HTML table
-    df = DataFrame(table_data, columns=["Agent Name", "IP Address", "Timestamp", "Event", "Severity"])
+    df = DataFrame(table_data, columns=["Timestamp", "Agent Name", "IP Address", "Event", "Severity"])
     return df.to_html(index=False, classes='table table-striped')
