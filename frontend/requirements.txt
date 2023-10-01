@@ -4,6 +4,7 @@ plotly==5.3.1
 pandas==1.4.0
 #Login Dependecies 
 Flask-WTF==1.1.1
+Werkzeug==2.2.2
 Flask-Login==0.6.2  
 WTForms==3.0.1
 Flask-Bootstrap==3.3.7.1
