@@ -1,11 +1,24 @@
 function renderCharts(data) {
-    if (data.alert_severity) {  // This should match the key used in the JSON returned by the server
+    if (data.alert_severity_pie_chart) {  // This should match the key used in the JSON returned by the server
         var layout = {
             // Define layout properties here if needed
         };
-        Plotly.newPlot('alert_severity_pie_chart', [data.alert_severity], layout);  // 'pie-chart-container' is the id of the div where the Pie chart will be rendered
+        Plotly.newPlot('alert_severity_pie_chart', [data.alert_severity_pie_chart], layout);  // 'pie-chart-container' is the id of the div where the Pie chart will be rendered
     } else {
-        console.error('alert_severity is undefined in the response');
+        console.error('alert_severity_pie_chart is undefined in the response');
+    }
+    
+    if (data.top_events_donut_chart) {
+        var trace = {
+            ...data.top_events_donut_chart,  // Spread the existing chart data
+            hole: .5  // Set the size of the hole to create a donut chart
+        };
+        var layout = {
+            // Define layout properties here if needed
+        };
+        Plotly.newPlot('top_events_donut_chart', [trace], layout);
+    } else {
+        console.error('top_event_donut_chart is undefined in the response');
     }
 }
 

@@ -8,7 +8,7 @@ from flask_session import Session
 
 import plotly.io as pio
 
-from visualisations.alert_pie_chart import create_alert_severity_pie_chart
+from visualisations.alert_severity_pie_chart import create_alert_severity_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
 from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
 from visualisations.alerts_per_agent_area_chart import create_alerts_per_agent_area_chart
@@ -83,7 +83,7 @@ def dashboard():
     agent_info_table = create_agent_info_table(es)
 
     alert_severity_pie_chart = create_alert_severity_pie_chart(es)
-    top_events = create_top_events_donut_chart(es)
+    top_events_donut_chart = create_top_events_donut_chart(es)
     mitre_attacks = create_top_mitre_attacks_donut_chart(es)
 
     alerts_per_agent = create_alerts_per_agent_area_chart(es)  
@@ -97,7 +97,7 @@ def dashboard():
                            agent_info_table = agent_info_table,
                            
                            alert_severity_pie_chart = alert_severity_pie_chart,
-                           top_events = top_events,
+                           top_events_donut_chart = top_events_donut_chart,
                            mitre_attacks = mitre_attacks,
 
                            alerts_per_agent=alerts_per_agent,
@@ -114,13 +114,15 @@ def dashboard_data():
     agent_info_table = create_agent_info_table(es)
   
     alert_severity_pie_chart = create_alert_severity_pie_chart(es)
+    top_events_donut_chart = create_top_events_donut_chart(es)
 
     event_logs_table = create_event_logs_table(es)
     
     return jsonify(
         agent_table=agent_info_table,
 
-        alert_severity=alert_severity_pie_chart,
+        alert_severity_pie_chart=alert_severity_pie_chart,
+        top_events_donut_chart = top_events_donut_chart,
 
         event_logs_table=event_logs_table,
     )

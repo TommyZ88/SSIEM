@@ -36,6 +36,14 @@
             <h2>Alert Severity</h2>
             <div id="alert_severity_pie_chart"></div>
         </div>
+        <div class="visualisations">
+            <h2>Top 5 Events</h2>
+            <div id="top_events_donut_chart"></div>
+        </div>
+
+
+
+
         
         <div id="table-container">
             <h2>Number of Alerts Per Agent</h2>
@@ -48,10 +56,6 @@
         <div id="donut-chart-container">
             <h2>Top MITRE ATT&CKS</h2>
             {{ mitre_attacks|safe }}
-        </div>
-        <div id="donut-chart-container">
-            <h2>Top 5 Events</h2>
-            {{ top_events|safe }}
         </div>
         
         <div id="bar-chart-container">

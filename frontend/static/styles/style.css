@@ -147,10 +147,10 @@ padding: 20px;
     color: #333;
 }
 
+.visualisations,
 #agent-information,
 #event-logs,
 #table-container,
-#pie-chart-container,
 #bar-chart-container,
 #donut-chart-container {
     margin: 20px;

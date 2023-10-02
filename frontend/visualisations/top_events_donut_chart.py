@@ -49,5 +49,15 @@ def create_top_events_donut_chart(es: Elasticsearch):
     fig = px.pie(df, names='event_name', values='counts', hole=.5, 
                  title='Top 5 Events')
     
-    # Return the plot as an HTML string
-    return fig.to_html(full_html=False)
+     # Extracting labels and values from buckets
+    labels = [bucket['key'] for bucket in buckets]
+    values = [bucket['doc_count'] for bucket in buckets]
+
+    # Preparing data to be returned in the desired format
+    fig_data = {
+        "labels": labels,
+        "values": values,
+        "type": "pie"
+    }
+    
+    return fig_data
