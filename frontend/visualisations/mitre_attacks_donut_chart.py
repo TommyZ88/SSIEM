@@ -48,5 +48,14 @@ def create_top_mitre_attacks_donut_chart(es: Elasticsearch):
     fig = px.pie(df, names='attack_name', values='counts', hole=.5, 
                  title='Top MITRE ATT&CK Techniques')
     
-    # Return the plot as an HTML string
-    return fig.to_html(full_html=False)
+     # Extracting labels and values from buckets
+    labels = [bucket['key'] for bucket in buckets]
+    values = [bucket['doc_count'] for bucket in buckets]
+    
+    fig_data = {
+        "labels": labels,
+        "values": values,
+        "type": "pie"
+    }
+    
+    return fig_data

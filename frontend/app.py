@@ -84,7 +84,7 @@ def dashboard():
 
     alert_severity_pie_chart = create_alert_severity_pie_chart(es)
     top_events_donut_chart = create_top_events_donut_chart(es)
-    mitre_attacks = create_top_mitre_attacks_donut_chart(es)
+    mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     alerts_per_agent = create_alerts_per_agent_area_chart(es)  
     distribution_alert_severity = create_distribution_of_alert_severity_plot(es)
@@ -98,7 +98,7 @@ def dashboard():
                            
                            alert_severity_pie_chart = alert_severity_pie_chart,
                            top_events_donut_chart = top_events_donut_chart,
-                           mitre_attacks = mitre_attacks,
+                           mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
                            alerts_per_agent=alerts_per_agent,
                            distribution_alert_severity = distribution_alert_severity, 
@@ -115,6 +115,7 @@ def dashboard_data():
   
     alert_severity_pie_chart = create_alert_severity_pie_chart(es)
     top_events_donut_chart = create_top_events_donut_chart(es)
+    mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     event_logs_table = create_event_logs_table(es)
     
@@ -123,6 +124,7 @@ def dashboard_data():
 
         alert_severity_pie_chart=alert_severity_pie_chart,
         top_events_donut_chart = top_events_donut_chart,
+        mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
         event_logs_table=event_logs_table,
     )

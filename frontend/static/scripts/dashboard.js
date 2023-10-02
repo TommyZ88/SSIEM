@@ -7,7 +7,7 @@ function renderCharts(data) {
     } else {
         console.error('alert_severity_pie_chart is undefined in the response');
     }
-    
+
     if (data.top_events_donut_chart) {
         var trace = {
             ...data.top_events_donut_chart,  // Spread the existing chart data
@@ -19,6 +19,19 @@ function renderCharts(data) {
         Plotly.newPlot('top_events_donut_chart', [trace], layout);
     } else {
         console.error('top_event_donut_chart is undefined in the response');
+    }
+
+    if (data.mitre_attacks_donut_chart) {
+        var trace = {
+            ...data.mitre_attacks_donut_chart,  // Spread the existing chart data
+            hole: .5  // Set the size of the hole to create a donut chart
+        };
+        var layout = {
+            // Define layout properties here if needed
+        };
+        Plotly.newPlot('mitre_attacks_donut_chart', [trace], layout);
+    } else {
+        console.error('mitre_attacks_donut_chart is undefined in the response');
     }
 }
 
