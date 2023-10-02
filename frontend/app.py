@@ -13,7 +13,7 @@ from visualisations.agent_info_table import create_agent_info_table
 from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
 from visualisations.alerts_per_agent_area_chart import create_alerts_per_agent_area_chart
 from visualisations.bar_chart import create_bar_chart
-from visualisations.distribution_of_alert_severity_plot import create_distribution_of_alert_severity_plot
+from visualisations.distribution_alert_severity_line_graph import create_distribution_alert_severity_line_graph
 from visualisations.event_logs_table import create_event_logs_table
 from visualisations.mitre_attacks_donut_chart import create_top_mitre_attacks_donut_chart
 from visualisations.top_events_donut_chart import create_top_events_donut_chart
@@ -87,12 +87,13 @@ def dashboard():
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     alerts_per_agent = create_alerts_per_agent_area_chart(es)  
-    distribution_alert_severity = create_distribution_of_alert_severity_plot(es)
+    distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
     
     auth_failure = create_auth_failure_bar_chart(es)
     bar_chart_showing_hosts = create_bar_chart(es)
     
     event_logs_table = create_event_logs_table(es)
+    
     return render_template('dashboard.html',
                            agent_info_table = agent_info_table,
                            
@@ -101,7 +102,7 @@ def dashboard():
                            mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
                            alerts_per_agent=alerts_per_agent,
-                           distribution_alert_severity = distribution_alert_severity, 
+                           distribution_alert_severity_line_graph = distribution_alert_severity_line_graph, 
                            
                            auth_failure=auth_failure,
                            bar_chart_showing_hosts = bar_chart_showing_hosts,
@@ -117,16 +118,20 @@ def dashboard_data():
     top_events_donut_chart = create_top_events_donut_chart(es)
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
+    distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
+
     event_logs_table = create_event_logs_table(es)
     
     return jsonify(
-        agent_table=agent_info_table,
+        agent_info_table=agent_info_table,
 
         alert_severity_pie_chart=alert_severity_pie_chart,
         top_events_donut_chart = top_events_donut_chart,
         mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
-        event_logs_table=event_logs_table,
+        distribution_alert_severity_line_graph = distribution_alert_severity_line_graph, 
+
+        event_logs_table=event_logs_table
     )
 
 if __name__ == '__main__':

@@ -28,22 +28,12 @@
             </header>
         </div>   
 
-        <div id="agent-information">
-            <h2>Agent Information</h2>
-        </div>
-
-        <div class="visualisations">
-            <h2>Alert Severity</h2>
-            <div id="alert_severity_pie_chart"></div>
-        </div>
-        <div class="visualisations">
-            <h2>Top 5 Events</h2>
-            <div id="top_events_donut_chart"></div>
-        </div>
-        <div class="visualisations">
-            <h2>Top MITRE Attacks</h2>
-            <div id="mitre_attacks_donut_chart"></div>
-        </div>
+        <div id="agent_info_table"></div>
+        <div id="alert_severity_pie_chart"></div>
+        <div id="top_events_donut_chart"></div>
+        <div id="mitre_attacks_donut_chart"></div>
+        <div id="distribution_alert_severity_line_graph"></div>
+        <div id="event_logs_table"></div>
 
 
 
@@ -53,10 +43,7 @@
             <h2>Number of Alerts Per Agent</h2>
             {{ alerts_per_agent|safe }}
         </div>
-        <div id="table-container">
-            <h2>Distribution of Alert Severity Levels Over Time</h2>
-            {{ distribution_alert_severity|safe }}
-        </div>
+        
         
         <div id="bar-chart-container">
             <h2>Authentication Failures Over Time</h2>
@@ -66,10 +53,7 @@
             <h2>Hosts Against Attacks Bar Chart</h2>
             {{ bar_chart_showing_hosts|safe }}
         </div> 
-        <div id="event-logs">
-            <h2>Event Logs</h2>
-            </div>
-        </div>
+
         <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
     </body>
     

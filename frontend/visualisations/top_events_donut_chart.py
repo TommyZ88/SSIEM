@@ -2,6 +2,8 @@ from elasticsearch import Elasticsearch
 import plotly.express as px
 import pandas as pd
 from datetime import datetime
+import json
+from plotly.utils import PlotlyJSONEncoder
 
 def create_top_events_donut_chart(es: Elasticsearch):
     # Define the Elasticsearch query body
@@ -49,15 +51,5 @@ def create_top_events_donut_chart(es: Elasticsearch):
     fig = px.pie(df, names='event_name', values='counts', hole=.5, 
                  title='Top 5 Events')
     
-     # Extracting labels and values from buckets
-    labels = [bucket['key'] for bucket in buckets]
-    values = [bucket['doc_count'] for bucket in buckets]
-
-    # Preparing data to be returned in the desired format
-    fig_data = {
-        "labels": labels,
-        "values": values,
-        "type": "pie"
-    }
-    
-    return fig_data
+    # Instead of returning HTML, convert the figure to JSON and return that.
+    return json.dumps(fig, cls=PlotlyJSONEncoder)

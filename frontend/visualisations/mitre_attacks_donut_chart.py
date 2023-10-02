@@ -1,6 +1,8 @@
 from elasticsearch import Elasticsearch
 import plotly.express as px
 import pandas as pd
+import json
+from plotly.utils import PlotlyJSONEncoder
 
 def create_top_mitre_attacks_donut_chart(es: Elasticsearch):
     # Define the Elasticsearch query body
@@ -46,16 +48,7 @@ def create_top_mitre_attacks_donut_chart(es: Elasticsearch):
     
     # Create a donut chart using plotly.express
     fig = px.pie(df, names='attack_name', values='counts', hole=.5, 
-                 title='Top MITRE ATT&CK Techniques')
+                 title='Top MITRE Attacks Techniques')
     
-     # Extracting labels and values from buckets
-    labels = [bucket['key'] for bucket in buckets]
-    values = [bucket['doc_count'] for bucket in buckets]
-    
-    fig_data = {
-        "labels": labels,
-        "values": values,
-        "type": "pie"
-    }
-    
-    return fig_data
+    # Instead of returning HTML, convert the figure to JSON and return that.
+    return json.dumps(fig, cls=PlotlyJSONEncoder)

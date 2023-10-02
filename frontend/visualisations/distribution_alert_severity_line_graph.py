@@ -2,8 +2,10 @@ from elasticsearch import Elasticsearch
 import plotly.express as px
 from datetime import datetime, timedelta
 import pandas as pd
+import json
+from plotly.utils import PlotlyJSONEncoder
 
-def create_distribution_of_alert_severity_plot(es: Elasticsearch):
+def create_distribution_alert_severity_line_graph(es: Elasticsearch):
     # Define the Elasticsearch query body
     body = {
         "size": 0,
@@ -51,5 +53,5 @@ def create_distribution_of_alert_severity_plot(es: Elasticsearch):
                   labels={'timestamps': 'Time', 'counts': 'Alert Count', 'severity': 'Severity Level'},
                   title='Distribution of Alert Severity Levels Over Time')
     
-    # Return the plot as an HTML string
-    return fig.to_html(full_html=False)
+    # Instead of returning HTML, convert the figure to JSON and return that.
+    return json.dumps(fig, cls=PlotlyJSONEncoder)

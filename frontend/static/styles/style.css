@@ -147,9 +147,12 @@ padding: 20px;
     color: #333;
 }
 
-.visualisations,
-#agent-information,
-#event-logs,
+#agent_info_table,
+#alert_severity_pie_chart,
+#top_events_donut_chart,
+#mitre_attacks_donut_chart,
+#distribution_alert_severity_line_graph,
+#event_logs_table,
 #table-container,
 #bar-chart-container,
 #donut-chart-container {
