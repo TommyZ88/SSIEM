@@ -135,11 +135,11 @@ main {
 padding: 20px;
 }
 
-#event-logs {
+#event_logs_table {
     max-height: 300px;
     overflow-y: auto;
 }
-#event-logs h2, th {
+#event_logs_table h2, th {
     position: sticky;
     top: 0;
     background-color: #ffffff;

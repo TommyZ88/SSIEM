@@ -8,6 +8,13 @@ def create_top_mitre_attacks_donut_chart(es: Elasticsearch):
     # Define the Elasticsearch query body
     body = {
         "size": 0,
+        "query": {
+            "bool": {
+                "must_not": [
+                    {"term": {"agent.id": "000"}}
+                ]
+            }
+        },
         "aggs": {
             "top_attacks": {
                 "terms": {"field": "rule.mitre.id", "size": 10},  # Adjust the size to get the top N MITRE ATT&CKs

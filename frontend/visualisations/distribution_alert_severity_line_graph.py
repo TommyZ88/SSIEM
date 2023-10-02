@@ -9,6 +9,13 @@ def create_distribution_alert_severity_line_graph(es: Elasticsearch):
     # Define the Elasticsearch query body
     body = {
         "size": 0,
+        "query": {
+            "bool": {
+                "must_not": [
+                    {"term": {"agent.id": "000"}}
+                ]
+            }
+        },
         "aggs": {
             "severity_over_time": {
                 "date_histogram": {"field": "@timestamp", "fixed_interval": "10m"},
