@@ -33,7 +33,9 @@
         <div id="top_events_donut_chart"></div>
         <div id="mitre_attacks_donut_chart"></div>
         <div id="distribution_alert_severity_line_graph"></div>
+        <div id="frequently_attacked_agents_bar_graph"></div>
         <div id="event_logs_table"></div>
+        
 
 
 
@@ -49,10 +51,6 @@
             <h2>Authentication Failures Over Time</h2>
             {{ auth_failure|safe }}
         </div>
-        <div id="table-container">
-            <h2>Hosts Against Attacks Bar Chart</h2>
-            {{ bar_chart_showing_hosts|safe }}
-        </div> 
 
         <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
     </body>

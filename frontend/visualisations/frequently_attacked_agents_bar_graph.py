@@ -1,13 +1,22 @@
 import plotly.express as px
 import plotly.graph_objects as go
 from elasticsearch import Elasticsearch
+import json
+from plotly.utils import PlotlyJSONEncoder
 
-def create_bar_chart(es: Elasticsearch):
+def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
 
     index_name = "wazuh-monitoring-*"
 
     body = {
         "size": 0,
+        "query": {
+            "bool": {
+                "must_not": [
+                   {"term": {"agent.id": "000"}}
+                ]
+            }
+        },
         "aggs": {
             "hosts": {
                 "terms": {
@@ -35,4 +44,5 @@ def create_bar_chart(es: Elasticsearch):
                       xaxis_title='Machine Name',
                       yaxis_title='Number of Attacks')
 
-    return fig.to_html(full_html=False)
+    # Instead of returning HTML, convert the figure to JSON and return that.
+    return json.dumps(fig, cls=PlotlyJSONEncoder)
