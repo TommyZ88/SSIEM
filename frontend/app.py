@@ -89,12 +89,11 @@ def dashboard():
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
     frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
 
-    alerts_per_agent = create_alerts_per_agent_area_chart(es)  
+    alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es)  
+
+    event_logs_table = create_event_logs_table(es)
     
     auth_failure = create_auth_failure_bar_chart(es)
-    
-    
-    event_logs_table = create_event_logs_table(es)
     
     return render_template('dashboard.html',
                            agent_info_table = agent_info_table,
@@ -105,11 +104,12 @@ def dashboard():
 
                            distribution_alert_severity_line_graph = distribution_alert_severity_line_graph, 
                            frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
+
+                           alerts_per_agent_area_chart=alerts_per_agent_area_chart,
                            
-                           auth_failure=auth_failure,
-                           alerts_per_agent=alerts_per_agent,
+                           event_logs_table = event_logs_table,
                            
-                           event_logs_table = event_logs_table
+                           auth_failure=auth_failure
                            )
 
 @app.route('/dashboard_data')
@@ -123,6 +123,8 @@ def dashboard_data():
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
     frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
 
+    alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
+
     event_logs_table = create_event_logs_table(es)
     
     return jsonify(
@@ -134,6 +136,8 @@ def dashboard_data():
 
         distribution_alert_severity_line_graph = distribution_alert_severity_line_graph,
         frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
+
+        alerts_per_agent_area_chart = alerts_per_agent_area_chart,
 
         event_logs_table=event_logs_table
     )

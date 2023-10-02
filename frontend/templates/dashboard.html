@@ -28,26 +28,17 @@
             </header>
         </div>   
 
-        <div id="agent_info_table"></div>
-        <div id="alert_severity_pie_chart"></div>
-        <div id="top_events_donut_chart"></div>
-        <div id="mitre_attacks_donut_chart"></div>
-        <div id="distribution_alert_severity_line_graph"></div>
-        <div id="frequently_attacked_agents_bar_graph"></div>
-        <div id="event_logs_table"></div>
-        
-
-
-
-
-
-        <div id="table-container">
-            <h2>Number of Alerts Per Agent</h2>
-            {{ alerts_per_agent|safe }}
-        </div>
+        <div class="visualisations" id="agent_info_table"></div>
+        <div class="visualisations" id="alert_severity_pie_chart"></div>
+        <div class="visualisations" id="top_events_donut_chart"></div>
+        <div class="visualisations" id="mitre_attacks_donut_chart"></div>
+        <div class="visualisations" id="distribution_alert_severity_line_graph"></div>
+        <div class="visualisations" id="frequently_attacked_agents_bar_graph"></div>
+        <div class="visualisations" id="alerts_per_agent_area_chart"></div>    
+        <div class="visualisations" id="event_logs_table"></div>
         
         
-        <div id="bar-chart-container">
+        <div class="visualisations" id="bar-chart-container">
             <h2>Authentication Failures Over Time</h2>
             {{ auth_failure|safe }}
         </div>

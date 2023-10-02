@@ -33,6 +33,13 @@ function renderCharts(data) {
     } else {
         console.error('frequently_attacked_agents_bar_graph is undefined in the response');
     }
+
+    if (data.alerts_per_agent_area_chart) {
+        var jsonData = JSON.parse(data.alerts_per_agent_area_chart);
+        Plotly.react('alerts_per_agent_area_chart', jsonData.data, jsonData.layout);
+    } else {
+        console.error('alerts_per_agent_area_chart is undefined in the response');
+    }
 }
 
 

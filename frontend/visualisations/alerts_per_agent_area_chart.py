@@ -2,6 +2,8 @@ from elasticsearch import Elasticsearch
 import plotly.express as px
 import pandas as pd
 from datetime import datetime
+import json
+from plotly.utils import PlotlyJSONEncoder
 
 def create_alerts_per_agent_area_chart(es: Elasticsearch):
     # Define the Elasticsearch query body for aggregating alerts by agent and timestamp
@@ -54,5 +56,5 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
     fig = px.area(df, x='Timestamp', y='Alert Count', color='Agent Name', line_shape='spline',
                   title='Number of Alerts Per Agent Over Time')
     
-    # Return the plot as an HTML string
-    return fig.to_html(full_html=False)
+    # Instead of returning HTML, convert the figure to JSON and return that.
+    return json.dumps(fig, cls=PlotlyJSONEncoder)

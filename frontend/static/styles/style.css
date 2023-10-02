@@ -147,28 +147,13 @@ padding: 20px;
     color: #333;
 }
 
-#agent_info_table,
-#alert_severity_pie_chart,
-#top_events_donut_chart,
-#mitre_attacks_donut_chart,
-#distribution_alert_severity_line_graph,
-#frequently_attacked_agents_bar_graph,
-#event_logs_table,
-#table-container,
-#bar-chart-container,
-#donut-chart-container {
+
+.visualisations {
     margin: 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
-}
-
-/*CSS to improve dashboard Visualisations*/
-.table-container h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 10px;
 }
 
 /* Apply styles to tables */
