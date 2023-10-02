@@ -146,8 +146,8 @@ padding: 20px;
     z-index: 1;
 }
 
+.visualisations,
 #table-container,
-#pie-chart-container,
 #bar-chart-container,
 #event-logs-table {
     margin: 20px;

@@ -8,7 +8,7 @@ from flask_session import Session
 
 import plotly.io as pio
 
-from visualisations.alert_pie_chart import create_alert_pie_chart
+from visualisations.alert_pie_chart import create_alert_severity_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
 from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
 from visualisations.alerts_per_agent_area_chart import create_alerts_per_agent_area_chart
@@ -21,7 +21,6 @@ from data.login_data import authenticate_user
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'SecretKey'
 app.config['SECRET_KEY'] = 'SecretKey'
 app.config['SESSION_TYPE'] = 'filesystem'  # Use filesystem session
 app.config['SESSION_PERMANENT'] = False
@@ -81,35 +80,50 @@ def management():
 
 @app.route('/dashboard')
 def dashboard():
-    agent_table = create_agent_info_table(es)
+    agent_info_table = create_agent_info_table(es)
+
+    alert_severity_pie_chart = create_alert_severity_pie_chart(es)
+    top_events = create_top_events_donut_chart(es)
+    mitre_attacks = create_top_mitre_attacks_donut_chart(es)
+
     alerts_per_agent = create_alerts_per_agent_area_chart(es)  
-    alert_severity = create_alert_pie_chart(es)
+    distribution_alert_severity = create_distribution_of_alert_severity_plot(es)
+    
     auth_failure = create_auth_failure_bar_chart(es)
     bar_chart_showing_hosts = create_bar_chart(es)
-    distribution_alert_severity = create_distribution_of_alert_severity_plot(es)
+    
     event_logs_table = create_event_logs_table(es)
-    mitre_attacks = create_top_mitre_attacks_donut_chart(es)
-    top_events = create_top_events_donut_chart(es)
     return render_template('dashboard.html',
-                           agent_table=agent_table,
-                           alerts_per_agent=alerts_per_agent, 
-                           alert_severity=alert_severity,
+                           agent_info_table = agent_info_table,
+                           
+                           alert_severity_pie_chart = alert_severity_pie_chart,
+                           top_events = top_events,
+                           mitre_attacks = mitre_attacks,
+
+                           alerts_per_agent=alerts_per_agent,
+                           distribution_alert_severity = distribution_alert_severity, 
+                           
                            auth_failure=auth_failure,
                            bar_chart_showing_hosts = bar_chart_showing_hosts,
-                           distribution_alert_severity = distribution_alert_severity,
-                           event_logs_table = event_logs_table,
-                           mitre_attacks = mitre_attacks,
-                           top_events = top_events)
+                           
+                           event_logs_table = event_logs_table
+                           )
 
-#Dashboard page
 @app.route('/dashboard_data')
 def dashboard_data():
-    agent_table = create_agent_info_table(es)
-    alert_severity = create_alert_pie_chart(es)
+    agent_info_table = create_agent_info_table(es)
+  
+    alert_severity_pie_chart = create_alert_severity_pie_chart(es)
+
     event_logs_table = create_event_logs_table(es)
-    return jsonify(agent_table=agent_table, 
-                   alert_severity=alert_severity,
-                   event_logs_table = event_logs_table)
+    
+    return jsonify(
+        agent_table=agent_info_table,
+
+        alert_severity=alert_severity_pie_chart,
+
+        event_logs_table=event_logs_table,
+    )
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=int(5000), debug=True)

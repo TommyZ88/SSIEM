@@ -5,33 +5,38 @@
         <title>Dashboard</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" href="../static/styles/style.css">
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     </head>
-
-    <div class="SIEM">
-        <h2>Security Information and Event Management System</h2>
-    </div>
-    <div class="navbar">
-        <div class="navbar-logo">
-            <img src="../static/images/bad_security.png" alt="Bad Security Inc Logo">
-            <img src="../static/images/swinburne_logo.png" alt="Swinburne Logo">
-        </div>
-        <header>
-        <nav>
-            <ul>
-                <li><a href="home">Home</a></li>
-                <li><a class="active" href="dashboard">Dashboard</a></li>
-                <li><a href="management">Management</a></li>
-                <li><a href="login">Login</a></li>
-            </ul>
-        </nav>
-        </header>
-    </div>   
-    
     <body>
+        <div class="SIEM">
+            <h2>Security Information and Event Management System</h2>
+        </div>
+        <div class="navbar">
+            <div class="navbar-logo">
+                <img src="../static/images/bad_security.png" alt="Bad Security Inc Logo">
+                <img src="../static/images/swinburne_logo.png" alt="Swinburne Logo">
+            </div>
+            <header>
+            <nav>
+                <ul>
+                    <li><a href="home">Home</a></li>
+                    <li><a class="active" href="dashboard">Dashboard</a></li>
+                    <li><a href="management">Management</a></li>
+                    <li><a href="login">Login</a></li>
+                </ul>
+            </nav>
+            </header>
+        </div>   
+
         <div id="agent-information">
             <h2>Agent Information</h2>
-            {{ agent_table|safe }}
         </div>
+
+        <div class="visualisations">
+            <h2>Alert Severity</h2>
+            <div id="alert_severity_pie_chart"></div>
+        </div>
+        
         <div id="table-container">
             <h2>Number of Alerts Per Agent</h2>
             {{ alerts_per_agent|safe }}
@@ -48,9 +53,7 @@
             <h2>Top 5 Events</h2>
             {{ top_events|safe }}
         </div>
-        <div id="pie-chart-container">
-            {{ alert_severity|safe }}
-        </div>
+        
         <div id="bar-chart-container">
             <h2>Authentication Failures Over Time</h2>
             {{ auth_failure|safe }}
@@ -61,10 +64,9 @@
         </div> 
         <div id="event-logs">
             <h2>Event Logs</h2>
-            {{ event_logs_table|safe }}
             </div>
         </div>
-        <!--<script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>-->
+        <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
     </body>
     
 </html>

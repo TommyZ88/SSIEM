@@ -3,7 +3,7 @@ import plotly.express as px
 from datetime import datetime
 
 
-def create_alert_pie_chart(es: Elasticsearch):
+def create_alert_severity_pie_chart(es: Elasticsearch):
     today = datetime.utcnow()
     start_of_today = today.replace(hour=0, minute=0, second=0, microsecond=0)
     body = {
@@ -43,4 +43,9 @@ def create_alert_pie_chart(es: Elasticsearch):
                                   bgcolor="LightSteelBlue", itemclick='toggleothers'),
                       legend_title_text='Severity')
     
-    return fig.to_html(full_html=False)
+    fig_data = {
+        "labels": labels,
+        "values": values,
+        "type": "pie",  # This denotes that you want to create a Pie Chart.
+    }
+    return fig_data
