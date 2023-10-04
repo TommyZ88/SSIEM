@@ -36,12 +36,7 @@
         <div class="visualisations" id="frequently_attacked_agents_bar_graph"></div>
         <div class="visualisations" id="alerts_per_agent_area_chart"></div>    
         <div class="visualisations" id="event_logs_table"></div>
-        
-        
-        <div class="visualisations" id="bar-chart-container">
-            <h2>Authentication Failures Over Time</h2>
-            {{ auth_failure|safe }}
-        </div>
+        <div class="visualisations" id="alert_choropleth"></div>
 
         <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
     </body>

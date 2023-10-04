@@ -8,15 +8,15 @@ from flask_session import Session
 
 import plotly.io as pio
 
-from visualisations.alert_severity_pie_chart import create_alert_severity_pie_chart
 from visualisations.agent_info_table import create_agent_info_table
-from visualisations.auth_failure_bar_chart import create_auth_failure_bar_chart
+from visualisations.alert_severity_pie_chart import create_alert_severity_pie_chart
 from visualisations.alerts_per_agent_area_chart import create_alerts_per_agent_area_chart
 from visualisations.frequently_attacked_agents_bar_graph import create_frequently_attacked_agents_bar_graph
 from visualisations.distribution_alert_severity_line_graph import create_distribution_alert_severity_line_graph
 from visualisations.event_logs_table import create_event_logs_table
 from visualisations.mitre_attacks_donut_chart import create_top_mitre_attacks_donut_chart
 from visualisations.top_events_donut_chart import create_top_events_donut_chart
+from visualisations.alert_choropleth import create_alert_choropleth
 from data.login_data import authenticate_user
 
 
@@ -93,11 +93,11 @@ def dashboard():
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
     frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
 
-    alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es)  
+    alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
+    alert_choropleth = create_alert_choropleth(es)
 
     event_logs_table = create_event_logs_table(es)
     
-    auth_failure = create_auth_failure_bar_chart(es)
     
     return render_template('dashboard.html',
                            agent_info_table = agent_info_table,
@@ -110,10 +110,9 @@ def dashboard():
                            frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
 
                            alerts_per_agent_area_chart=alerts_per_agent_area_chart,
+                           alert_choropleth = alert_choropleth,
                            
-                           event_logs_table = event_logs_table,
-                           
-                           auth_failure=auth_failure
+                           event_logs_table = event_logs_table
                            )
 
 @app.route('/dashboard_data')
@@ -128,6 +127,7 @@ def dashboard_data():
     frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
 
     alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
+    alert_choropleth = create_alert_choropleth(es)
 
     event_logs_table = create_event_logs_table(es)
     
@@ -142,6 +142,7 @@ def dashboard_data():
         frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
 
         alerts_per_agent_area_chart = alerts_per_agent_area_chart,
+        alert_choropleth = alert_choropleth,
 
         event_logs_table=event_logs_table
     )

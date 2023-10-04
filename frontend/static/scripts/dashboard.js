@@ -40,6 +40,14 @@ function renderCharts(data) {
     } else {
         console.error('alerts_per_agent_area_chart is undefined in the response');
     }
+
+    if (data.alert_choropleth) {
+        var jsonData = JSON.parse(data.alert_choropleth);
+        Plotly.react('alert_choropleth', jsonData.data, jsonData.layout);
+    } else {
+        console.error('alert_choropleth is undefined in the response');
+    }
+    
 }
 
 
