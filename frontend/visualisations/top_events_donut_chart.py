@@ -1,7 +1,6 @@
 from elasticsearch import Elasticsearch
 import plotly.express as px
 import pandas as pd
-from datetime import datetime
 import json
 from plotly.utils import PlotlyJSONEncoder
 
@@ -46,10 +45,48 @@ def create_top_events_donut_chart(es: Elasticsearch):
     
     # Convert the data dictionary to a pandas DataFrame
     df = pd.DataFrame(data)
+
+    # Custom colors from mitre.py
+    colors = ['#F8B195', '#F67280', '#C06C84', '#6C5B7B', '#355C7D']
+    colors = colors[:len(data["event_name"])]
     
-    # Create a donut chart using plotly.express
-    fig = px.pie(df, names='event_name', values='counts', hole=.5, 
+    # Create a donut chart using plotly.express with styling applied
+    fig = px.pie(df, names='event_name', values='counts', hole=.5, color_discrete_sequence=colors,
                  title='Top 5 Events')
+
+    hover_template = "<b>Count: %{value}</b>"
+    fig.update_traces(textinfo='percent', hovertemplate=hover_template)
+    
+    # Apply styling from mitre.py
+    fig.update_layout(
+        margin=dict(
+            l=20,
+            r=50,
+            t=60,
+            b=0
+        ),
+        title=dict(
+            text='<b>Top 5 Events<b>',
+            x=0.05,
+            y=0.95,
+            font=dict(
+                size=20,
+                color='black',
+                family='Arial'
+            )
+        ),
+        width=650,
+        height=300,
+        plot_bgcolor='white',
+        legend_title_text='Event Name',
+        legend=dict(
+            x=1, 
+            y=1, 
+            font=dict(
+                family="Arial, sans-serif", 
+                size=10, 
+                color="black"))
+    )
     
     # Instead of returning HTML, convert the figure to JSON and return that.
     return json.dumps(fig, cls=PlotlyJSONEncoder)
