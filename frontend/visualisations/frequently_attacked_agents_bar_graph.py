@@ -34,12 +34,10 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
 
     buckets = response['aggregations']['hosts']['buckets']
 
-    print (buckets)
-
     hosts = [str(bucket['key']) for bucket in buckets]
     attack_counts = [bucket['doc_count'] for bucket in buckets]
 
-    colors = ['#54A5C0','#E3577A','#60BDA5','#F2BD47']
+    colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
     # Create separate bar traces for each host
     traces = []
     for host, attack_count, color in zip(hosts, attack_counts, colors):
@@ -66,9 +64,8 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
             )
         ),
         width=600,
-        height=340,
+        height=200,
         plot_bgcolor='white',  # Background color for the plotting area
-        #paper_bgcolor='whitesmoke',  # Background color for the entire figure
         yaxis=dict(
             title='Number of Attacks',
             showline=True,       # Display the y-axis line
