@@ -55,7 +55,9 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
     # Create a Figure using Graph Objects
     fig = go.Figure()
     agents = df["Agent Name"].unique()
-    colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
+    
+    #colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
+    colors = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D'] 
 
     for agent, color in zip(agents, colors):
         filtered_df = df[df["Agent Name"] == agent]
@@ -93,7 +95,7 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
             )
         ),
         width=700,
-        height=200,
+        height=300,
         plot_bgcolor='white',
         yaxis=dict(
             title='Number of Alerts',

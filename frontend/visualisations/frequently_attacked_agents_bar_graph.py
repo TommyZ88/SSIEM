@@ -37,14 +37,25 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
     hosts = [str(bucket['key']) for bucket in buckets]
     attack_counts = [bucket['doc_count'] for bucket in buckets]
 
-    colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
+    #colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
+    colors = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D'] 
     # Create separate bar traces for each host
     traces = []
     for host, attack_count, color in zip(hosts, attack_counts, colors):
-        trace = go.Bar(x=[host], y=[attack_count], name=host, marker_color=color, width=[0.6])
+        hover_text = f'<b>Count: {attack_count}</b>'
+        trace = go.Bar(
+            x=[host], 
+            y=[attack_count], 
+            name=host, 
+            marker_color=color, 
+            width=[0.6],
+            hoverinfo='text', 
+            hovertext=[hover_text]  # This line sets the custom hover text
+        )
         traces.append(trace)
 
     fig = go.Figure(data=traces)
+
 
     fig.update_layout(
         margin=dict(
@@ -64,7 +75,7 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
             )
         ),
         width=600,
-        height=200,
+        height=300,
         plot_bgcolor='white',  # Background color for the plotting area
         yaxis=dict(
             title='Number of Attacks',
