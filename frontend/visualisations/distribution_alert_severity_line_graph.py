@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-import plotly.express as px
+import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import pandas as pd
 import json
@@ -54,11 +54,65 @@ def create_distribution_alert_severity_line_graph(es: Elasticsearch):
     
     # Convert the data dictionary to a pandas DataFrame
     df = pd.DataFrame(data)
+
+    # Custom colors from area_chart.py
+    colors = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D']
+    severity_levels = df["severity"].unique()
+
+    # Create a line chart using Graph Objects
+    fig = go.Figure()
+    for severity, color in zip(severity_levels, colors):
+        filtered_df = df[df["severity"] == severity]
+        fig.add_trace(
+            go.Scatter(
+                x=filtered_df["timestamps"],
+                y=filtered_df["counts"],
+                mode='lines+markers',
+                name=str(severity),
+                line=dict(color=color, width=5),
+                marker=dict(size=10)
+            )
+        )
     
-    # Create a line chart using plotly.express
-    fig = px.line(df, x='timestamps', y='counts', color='severity', 
-                  labels={'timestamps': 'Time', 'counts': 'Alert Count', 'severity': 'Severity Level'},
-                  title='Distribution of Alert Severity Levels Over Time')
+    # Applying the styles as per area_chart.py
+    fig.update_layout(
+        margin=dict(
+            l=20,  # left margin in pixels
+            r=50,  # right margin in pixels
+            t=60,  # top margin in pixels
+            b=0    # bottom margin in pixels
+        ),
+        title=dict(
+            text='<b>Distribution of Alert Severity Levels Over Time<b>',
+            x=0.05,  # Move title a little to the left
+            y=0.95,  # Move title a little to the top
+            font=dict(
+                size=20,           # Font size
+                color='black',     # Font color
+                family='Arial',
+            )
+        ),
+        width=700,
+        height=300,
+        plot_bgcolor='white',
+        yaxis=dict(
+            title='Number of Alerts',
+            showline=True,
+            linewidth=1,
+            linecolor='lightgrey',
+            showticksuffix='all',
+            ticks='outside',
+            ticklen=5,
+            tickcolor='lightgrey',
+            title_standoff=20
+        ),
+        xaxis=dict(
+            showline=True,
+            linewidth=1,
+            linecolor='lightgrey'
+        ),
+        legend=dict(x=1, y=1, title_text="Alert Level")
+    )
     
     # Instead of returning HTML, convert the figure to JSON and return that.
     return json.dumps(fig, cls=PlotlyJSONEncoder)
