@@ -56,7 +56,7 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
             b=0   # bottom margin in pixels
         ),
         title=dict(
-            text='Most Frequently Attacked Machines',
+            text='<b>Most Frequently Attacked Machines<b>',
             x=0.05,  # Move title a little to the left
             y=0.95,  # Move title a little to the top
             font=dict(
@@ -73,14 +73,19 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
             title='Number of Attacks',
             showline=True,       # Display the y-axis line
             linewidth=1,         # Set the line width
-            linecolor='grey',    # Set the line color
-            tickvals=list(range(0, 41, 5))  # Ticks every 5 units. Adjust as needed.
+            linecolor='lightgrey',    # Set the line color
+            showticksuffix='all',  # Show ticklines on the y-axis
+            ticks='outside',       # Specify that the ticks should be outside the plot
+            tickvals=list(range(0, 41, 5)),  # Ticks every 5 units. Adjust as needed.
+            ticklen=5,             # Length of the ticks
+            tickcolor='lightgrey',
+            title_standoff=20      # Increase distance between title and axis
         ),
         xaxis=dict(
             showticklabels=False,
             showline=True,       # Display the x-axis line
             linewidth=1,         # Set the line width
-            linecolor='grey'    # Set the line color
+            linecolor='lightgrey'    # Set the line color
         ),
         legend=dict(x=1, y=1)
         )
