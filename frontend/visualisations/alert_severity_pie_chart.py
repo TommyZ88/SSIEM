@@ -60,7 +60,7 @@ def create_alert_severity_pie_chart(es: Elasticsearch):
                 family='Arial'
             )
         ),
-        width=400,
+        width=430,
         height=300,
         plot_bgcolor='white',
         legend_title_text='Severity Level',

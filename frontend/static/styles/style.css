@@ -149,11 +149,43 @@ padding: 20px;
 
 
 .visualisations {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
+    padding: 15px;
+    border: 1px solid #bebebe;
     border-radius: 5px;
     background-color: #fff;
+}
+
+.viz_row_1 {
+    margin: 10px;
+    flex:1;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+}
+
+#frequently_attacked_agents_bar_graph, #alerts_per_agent_area_chart {
+    box-sizing: border-box;
+}
+
+.viz_row_2 {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+}
+
+#alert_severity_pie_chart, #distribution_alert_severity_line_graph {
+    box-sizing: border-box;
+}
+
+#alert_severity_pie_chart {
+    flex:3.5;
+    margin-right: 5px;
+}
+
+#distribution_alert_severity_line_graph {
+    flex:6.5;
+    margin-left: 5px;
 }
 
 

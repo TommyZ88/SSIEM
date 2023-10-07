@@ -74,7 +74,7 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
                 family='Arial',
             )
         ),
-        width=600,
+        width=630,
         height=300,
         plot_bgcolor='white',  # Background color for the plotting area
         yaxis=dict(

@@ -92,7 +92,7 @@ def create_distribution_alert_severity_line_graph(es: Elasticsearch):
                 family='Arial',
             )
         ),
-        width=700,
+        width=850,
         height=300,
         plot_bgcolor='white',
         yaxis=dict(
