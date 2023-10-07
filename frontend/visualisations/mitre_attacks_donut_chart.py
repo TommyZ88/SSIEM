@@ -79,7 +79,7 @@ def create_top_mitre_attacks_donut_chart(es: Elasticsearch):
                 family='Arial'
             )
         ),
-        width=400,
+        width=420,
         height=300,
         plot_bgcolor='white',
         legend_title_text='MITRE ID',

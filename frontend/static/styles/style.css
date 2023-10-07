@@ -28,6 +28,11 @@ body, ul, li {
    padding: 0;
    list-style: none;
 }
+
+#dashboard_body {
+    background-color: #fafbfd;
+}
+
 .content {
     padding-bottom: 10px;
     color: #104766;/* Adjust this value to match the footer's height */
@@ -135,27 +140,14 @@ main {
 padding: 20px;
 }
 
-#event_logs_table {
-    max-height: 300px;
-    overflow-y: auto;
-}
-#event_logs_table h2, th {
-    position: sticky;
-    top: 0;
-    background-color: #ffffff;
-    z-index: 1;
-    color: #333;
-}
-
-
 .visualisations {
     padding: 15px;
-    border: 1px solid #bebebe;
+    border: 1px solid #d4dae5;
     border-radius: 5px;
     background-color: #fff;
 }
 
-.viz_row_1 {
+#viz_row_1 {
     margin: 10px;
     flex:1;
     display: flex;
@@ -167,7 +159,7 @@ padding: 20px;
     box-sizing: border-box;
 }
 
-.viz_row_2 {
+#viz_row_2 {
     margin: 10px;
     display: flex;
     justify-content: space-between;
@@ -188,32 +180,92 @@ padding: 20px;
     margin-left: 5px;
 }
 
+#viz_row_3 {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+}
 
-/* Apply styles to tables */
+#top_events_donut_chart, #agent_info_table {
+    box-sizing: border-box;
+}
+
+#top_events_donut_chart {
+    flex:5.5;
+    margin-right: 5px;
+}
+
+#agent_info_table {
+    flex:4.5;
+    margin-left: 5px;
+}
+
+#viz_row_4 {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    clear: both;
+}
+
+#alert_choropleth, #mitre_attacks_donut_chart {
+    box-sizing: border-box;
+}
+
+#alert_choropleth {
+    flex:6.3;
+    margin-right: 5px;
+}
+
+
+#mitre_attacks_donut_chart {
+    flex:3.7;
+    margin-left: 5px;
+}
+
+#event_logs_table {
+    margin: 10px;
+    clear: both;
+    width: 96.4%;
+    max-height: 400px;
+    overflow-y: auto;
+}
+ 
 table {
-    width: 100%;
+    width: 92%;
+    margin: 15px 20px 10px 20px;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: none;  
 }
 
 th, td {
     padding: 8px;
     text-align: left;
+    font-size: 14px;
+}
+
+td {
+    border-bottom: 1px solid #d4dae5;  /* Only keep the bottom border for table cells (td) */
 }
 
 th {
-    background-color: #333;
-    color: #fff;
+    background-color: #F8B195; 
 }
 
-/* Style for alternating rows */
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+#agent_info_table, #event_logs_table th {
+    color: #333;
+    padding: 10px;
 }
+
+#agent_info_table h2, #event_logs_table h2 {
+    margin-top: 10px;
+    margin-left: 20px;
+    font-size: 20px; 
+}
+
 
 /* Style links */
 a {

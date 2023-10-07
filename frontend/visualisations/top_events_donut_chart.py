@@ -75,7 +75,7 @@ def create_top_events_donut_chart(es: Elasticsearch):
                 family='Arial'
             )
         ),
-        width=650,
+        width=700,
         height=300,
         plot_bgcolor='white',
         legend_title_text='Event Name',
@@ -84,7 +84,7 @@ def create_top_events_donut_chart(es: Elasticsearch):
             y=1, 
             font=dict(
                 family="Arial, sans-serif", 
-                size=10, 
+                size=12, 
                 color="black"))
     )
     
