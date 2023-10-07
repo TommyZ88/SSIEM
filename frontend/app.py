@@ -15,8 +15,7 @@ from visualisations.distribution_alert_severity_line_graph import create_distrib
 from visualisations.event_logs_table import create_event_logs_table
 from visualisations.mitre_attacks_donut_chart import create_top_mitre_attacks_donut_chart
 from visualisations.top_events_donut_chart import create_top_events_donut_chart
-from visualisations.alert_choropleth import create_alert_choropleth
-from visualisations.auth_failures_bar_graph import create_auth_failures_bar_graph
+from visualisations.auth_failures_histogram import create_auth_failures_histogram
 from visualisations.total_agent_alerts_bar_graph import create_total_agent_alerts_bar_graph
 from data.login_data import authenticate_user
 
@@ -92,11 +91,10 @@ def dashboard():
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
-    auth_failures_bar_graph = create_auth_failures_bar_graph(es)
+    auth_failures_histogram = create_auth_failures_histogram(es)
     total_agent_alerts_bar_graph = create_total_agent_alerts_bar_graph(es)
 
     alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
-    alert_choropleth = create_alert_choropleth(es)
 
     event_logs_table = create_event_logs_table(es)
     
@@ -109,11 +107,10 @@ def dashboard():
                            mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
                            distribution_alert_severity_line_graph = distribution_alert_severity_line_graph, 
-                           auth_failures_bar_graph = auth_failures_bar_graph,
+                           auth_failures_histogram = auth_failures_histogram,
                            total_agent_alerts_bar_graph = total_agent_alerts_bar_graph,
 
                            alerts_per_agent_area_chart=alerts_per_agent_area_chart,
-                           alert_choropleth = alert_choropleth,
                            
                            event_logs_table = event_logs_table
                            )
@@ -127,11 +124,10 @@ def dashboard_data():
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
-    auth_failures_bar_graph = create_auth_failures_bar_graph(es)
+    auth_failures_histogram = create_auth_failures_histogram(es)
     total_agent_alerts_bar_graph = create_total_agent_alerts_bar_graph(es)
 
     alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
-    alert_choropleth = create_alert_choropleth(es)
 
     event_logs_table = create_event_logs_table(es)
     
@@ -143,11 +139,10 @@ def dashboard_data():
         mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
         distribution_alert_severity_line_graph = distribution_alert_severity_line_graph,
-        auth_failures_bar_graph = auth_failures_bar_graph,
+        auth_failures_histogram = auth_failures_histogram,
         total_agent_alerts_bar_graph = total_agent_alerts_bar_graph,
 
         alerts_per_agent_area_chart = alerts_per_agent_area_chart,
-        alert_choropleth = alert_choropleth,
 
         event_logs_table=event_logs_table
     )

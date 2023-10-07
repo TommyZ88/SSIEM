@@ -27,11 +27,11 @@ function renderCharts(data) {
         console.error('distribution_alert_severity_line_graph is undefined in the response');
     }
 
-    if (data.auth_failures_bar_graph) {
-        var jsonData = JSON.parse(data.auth_failures_bar_graph);
-        Plotly.react('auth_failures_bar_graph', jsonData.data, jsonData.layout);
+    if (data.auth_failures_histogram) {
+        var jsonData = JSON.parse(data.auth_failures_histogram);
+        Plotly.react('auth_failures_histogram', jsonData.data, jsonData.layout);
     } else {
-        console.error('auth_failures_bar_graph is undefined in the response');
+        console.error('auth_failures_histogram is undefined in the response');
     }
     
     if (data.total_agent_alerts_bar_graph) {
@@ -46,13 +46,6 @@ function renderCharts(data) {
         Plotly.react('alerts_per_agent_area_chart', jsonData.data, jsonData.layout);
     } else {
         console.error('alerts_per_agent_area_chart is undefined in the response');
-    }
-
-    if (data.alert_choropleth) {
-        var jsonData = JSON.parse(data.alert_choropleth);
-        Plotly.react('alert_choropleth', jsonData.data, jsonData.layout);
-    } else {
-        console.error('alert_choropleth is undefined in the response');
     }
     
 }

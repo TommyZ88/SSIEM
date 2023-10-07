@@ -155,7 +155,7 @@ padding: 20px;
     clear: both;
 }
 
-#auth_failures_bar_graph, #alerts_per_agent_area_chart {
+#total_agent_alerts_bar_graph, #alerts_per_agent_area_chart {
     box-sizing: border-box;
 }
 
@@ -208,11 +208,11 @@ padding: 20px;
     clear: both;
 }
 
-#alert_choropleth, #mitre_attacks_donut_chart {
+#auth_failures_histogram, #mitre_attacks_donut_chart {
     box-sizing: border-box;
 }
 
-#alert_choropleth {
+#auth_failures_histogram {
     flex:6.3;
     margin-right: 5px;
 }
