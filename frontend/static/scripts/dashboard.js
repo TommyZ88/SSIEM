@@ -27,11 +27,11 @@ function renderCharts(data) {
         console.error('distribution_alert_severity_line_graph is undefined in the response');
     }
 
-    if (data.frequently_attacked_agents_bar_graph) {
-        var jsonData = JSON.parse(data.frequently_attacked_agents_bar_graph);
-        Plotly.react('frequently_attacked_agents_bar_graph', jsonData.data, jsonData.layout);
+    if (data.auth_failures_bar_graph) {
+        var jsonData = JSON.parse(data.auth_failures_bar_graph);
+        Plotly.react('auth_failures_bar_graph', jsonData.data, jsonData.layout);
     } else {
-        console.error('frequently_attacked_agents_bar_graph is undefined in the response');
+        console.error('auth_failures_bar_graph is undefined in the response');
     }
 
     if (data.alerts_per_agent_area_chart) {

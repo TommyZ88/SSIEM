@@ -155,7 +155,7 @@ padding: 20px;
     clear: both;
 }
 
-#frequently_attacked_agents_bar_graph, #alerts_per_agent_area_chart {
+#auth_failures_bar_graph, #alerts_per_agent_area_chart {
     box-sizing: border-box;
 }
 

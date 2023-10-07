@@ -11,12 +11,12 @@ import plotly.io as pio
 from visualisations.agent_info_table import create_agent_info_table
 from visualisations.alert_severity_pie_chart import create_alert_severity_pie_chart
 from visualisations.alerts_per_agent_area_chart import create_alerts_per_agent_area_chart
-from visualisations.frequently_attacked_agents_bar_graph import create_frequently_attacked_agents_bar_graph
 from visualisations.distribution_alert_severity_line_graph import create_distribution_alert_severity_line_graph
 from visualisations.event_logs_table import create_event_logs_table
 from visualisations.mitre_attacks_donut_chart import create_top_mitre_attacks_donut_chart
 from visualisations.top_events_donut_chart import create_top_events_donut_chart
 from visualisations.alert_choropleth import create_alert_choropleth
+from visualisations.auth_failures_bar_graph import create_auth_failures_bar_graph
 from data.login_data import authenticate_user
 
 
@@ -91,7 +91,7 @@ def dashboard():
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
-    frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
+    auth_failures_bar_graph = create_auth_failures_bar_graph(es)
 
     alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
     alert_choropleth = create_alert_choropleth(es)
@@ -107,7 +107,7 @@ def dashboard():
                            mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
                            distribution_alert_severity_line_graph = distribution_alert_severity_line_graph, 
-                           frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
+                           auth_failures_bar_graph = auth_failures_bar_graph,
 
                            alerts_per_agent_area_chart=alerts_per_agent_area_chart,
                            alert_choropleth = alert_choropleth,
@@ -124,7 +124,7 @@ def dashboard_data():
     mitre_attacks_donut_chart = create_top_mitre_attacks_donut_chart(es)
 
     distribution_alert_severity_line_graph = create_distribution_alert_severity_line_graph(es)
-    frequently_attacked_agents_bar_graph = create_frequently_attacked_agents_bar_graph(es)
+    auth_failures_bar_graph = create_auth_failures_bar_graph(es)
 
     alerts_per_agent_area_chart = create_alerts_per_agent_area_chart(es) 
     alert_choropleth = create_alert_choropleth(es)
@@ -139,7 +139,7 @@ def dashboard_data():
         mitre_attacks_donut_chart = mitre_attacks_donut_chart,
 
         distribution_alert_severity_line_graph = distribution_alert_severity_line_graph,
-        frequently_attacked_agents_bar_graph = frequently_attacked_agents_bar_graph,
+        auth_failures_bar_graph = auth_failures_bar_graph,
 
         alerts_per_agent_area_chart = alerts_per_agent_area_chart,
         alert_choropleth = alert_choropleth,

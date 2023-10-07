@@ -4,30 +4,28 @@ from elasticsearch import Elasticsearch
 import json
 from plotly.utils import PlotlyJSONEncoder
 
-#THIS VISUALISATION IS NOT BEING USED.
-#THIS VISUALISATION IS NOT BEING USED.
-#THIS VISUALISATION IS NOT BEING USED.
-#THIS VISUALISATION IS NOT BEING USED.
-#THIS VISUALISATION IS NOT BEING USED.
+def create_auth_failures_bar_graph(es: Elasticsearch):
 
-def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
+    index_name = "wazuh-alerts-*"
 
-    index_name = "wazuh-monitoring-*"
-
+    # Query to get authentication failures over time grouped by agent
     body = {
         "size": 0,
         "query": {
             "bool": {
+                "must": [
+                    {"terms": {"rule.id": ["2501", "5503", "5301"]}}
+                ],
                 "must_not": [
-                   {"term": {"agent.id": "000"}}
+                    {"term": {"agent.id": "000"}}
                 ]
             }
         },
         "aggs": {
-            "hosts": {
+            "agents": {
                 "terms": {
-                    "field": "name",
-                    "size": 10,
+                    "field": "agent.name",
+                    "size": 10,  # Getting top 10 agents by failure counts. Adjust if necessary.
                     "order": {
                         "_count": "desc"
                     }
@@ -38,30 +36,31 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
 
     response = es.search(index=index_name, body=body)
 
-    buckets = response['aggregations']['hosts']['buckets']
+    buckets = response['aggregations']['agents']['buckets']
 
-    hosts = [str(bucket['key']) for bucket in buckets]
-    attack_counts = [bucket['doc_count'] for bucket in buckets]
+    agents = [str(bucket['key']) for bucket in buckets]
+    auth_counts = [bucket['doc_count'] for bucket in buckets]
+
+    traces = []
 
     #colors = ['#54A5C0','#E3577A','#F2BD47','#60BDA5']
     colors = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D'] 
-    # Create separate bar traces for each host
-    traces = []
-    for host, attack_count, color in zip(hosts, attack_counts, colors):
-        hover_text = f'<b>Count: {attack_count}</b>'
+
+    for agent, auth_count, color in zip(agents, auth_counts, colors):
+        hover_text = f'<b>Count: {auth_count}</b>'
         trace = go.Bar(
-            x=[host], 
-            y=[attack_count], 
-            name=host, 
+            x=[agent], 
+            y=[auth_count], 
+            name=agent, 
             marker_color=color, 
             width=[0.6],
             hoverinfo='text', 
             hovertext=[hover_text]  # This line sets the custom hover text
         )
+
         traces.append(trace)
 
     fig = go.Figure(data=traces)
-
 
     fig.update_layout(
         margin=dict(
@@ -71,7 +70,7 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
             b=0   # bottom margin in pixels
         ),
         title=dict(
-            text='<b>Most Frequently Attacked Machines<b>',
+            text='<b>Total Authentication Failures<b>',
             x=0.05,  # Move title a little to the left
             y=0.95,  # Move title a little to the top
             font=dict(
@@ -84,7 +83,7 @@ def create_frequently_attacked_agents_bar_graph(es: Elasticsearch):
         height=300,
         plot_bgcolor='white',  # Background color for the plotting area
         yaxis=dict(
-            title='Number of Attacks',
+            title='Number of Failures',
             showline=True,       # Display the y-axis line
             linewidth=1,         # Set the line width
             linecolor='lightgrey',    # Set the line color
