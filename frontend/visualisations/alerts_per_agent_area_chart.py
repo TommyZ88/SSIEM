@@ -71,8 +71,14 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
                 mode='lines+markers',
                 fill='tozeroy',
                 name=agent,
-                line=dict(color=color),
-                fillcolor=f'rgba({r},{g},{b},0.8)'  # 70% opacity
+                line=dict(color=color, width=5),
+                marker=dict(size=10),
+                fillcolor=f'rgba({r},{g},{b},0.75)',  # 75% opacity
+                hovertemplate=(
+                "<b>Date/Time:</b> %{x}<br>" +
+                "<b>Count:</b> %{y}<br>" +
+                "<extra></extra>"  # This hides additional info usually shown in hover
+            )
             )
         )
     
@@ -104,7 +110,6 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
             linecolor='lightgrey',
             showticksuffix='all',
             ticks='outside',
-            tickvals=list(range(5, 31, 5)),  # Ticks every 5 units. Adjust as needed.
             ticklen=5,
             tickcolor='lightgrey',
             title_standoff=20

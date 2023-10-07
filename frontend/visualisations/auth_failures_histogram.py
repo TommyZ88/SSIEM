@@ -69,7 +69,12 @@ def create_auth_failures_histogram(es: Elasticsearch):
             x=timestamps,
             y=counts,
             name=agent,
-            marker_color=colors[i % len(colors)]
+            marker_color=colors[i % len(colors)],
+            hovertemplate=(
+                "<b>Date/Time:</b> %{x}<br>" +
+                "<b>Count:</b> %{y}<br>" +
+                "<extra></extra>"  # This hides additional info usually shown in hover
+            )
         ))
 
     fig.update_layout(

@@ -225,6 +225,7 @@ padding: 20px;
 
 #event_logs_table {
     margin: 10px;
+    margin-bottom: 50px;
     clear: both;
     width: 96.4%;
     max-height: 400px;

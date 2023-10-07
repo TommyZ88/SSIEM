@@ -70,7 +70,12 @@ def create_distribution_alert_severity_line_graph(es: Elasticsearch):
                 mode='lines+markers',
                 name=str(severity),
                 line=dict(color=color, width=5),
-                marker=dict(size=10)
+                marker=dict(size=10),
+                hovertemplate=(
+                "<b>Date/Time:</b> %{x}<br>" +
+                "<b>Count:</b> %{y}<br>" +
+                "<extra></extra>"  # This hides additional info usually shown in hover
+            )
             )
         )
     
