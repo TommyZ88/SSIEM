@@ -33,6 +33,13 @@ function renderCharts(data) {
     } else {
         console.error('auth_failures_bar_graph is undefined in the response');
     }
+    
+    if (data.total_agent_alerts_bar_graph) {
+        var jsonData = JSON.parse(data.total_agent_alerts_bar_graph);
+        Plotly.react('total_agent_alerts_bar_graph', jsonData.data, jsonData.layout);
+    } else {
+        console.error('total_agent_alerts_bar_graph is undefined in the response');
+    }
 
     if (data.alerts_per_agent_area_chart) {
         var jsonData = JSON.parse(data.alerts_per_agent_area_chart);

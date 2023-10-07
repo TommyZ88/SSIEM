@@ -18,7 +18,7 @@ def create_distribution_alert_severity_line_graph(es: Elasticsearch):
         },
         "aggs": {
             "severity_over_time": {
-                "date_histogram": {"field": "@timestamp", "fixed_interval": "10m"},
+                "date_histogram": {"field": "@timestamp", "fixed_interval": "5m"},
                 "aggs": {
                     "severity_levels": {"terms": {"field": "rule.level"}}
                 }

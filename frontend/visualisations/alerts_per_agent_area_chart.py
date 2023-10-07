@@ -11,7 +11,7 @@ def create_alerts_per_agent_area_chart(es: Elasticsearch):
         "size": 0,
         "aggs": {
             "alerts_over_time": {
-                "date_histogram": {"field": "@timestamp", "fixed_interval": "1h"},
+                "date_histogram": {"field": "@timestamp", "fixed_interval": "5m"},
                 "aggs": {
                     "agent_names": {"terms": {"field": "agent.name", "size": 5}}
                 }
