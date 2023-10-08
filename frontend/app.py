@@ -4,7 +4,8 @@ from flask_bootstrap import Bootstrap
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Length
 from elasticsearch import Elasticsearch
-from flask_session import Session
+from flask_login import LoginManager, UserMixin, login_required
+
 
 import plotly.io as pio
 
@@ -24,8 +25,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SecretKey'
 app.config['SESSION_TYPE'] = 'filesystem'  # Use filesystem session
 app.config['SESSION_PERMANENT'] = False
-Session(app)
 Bootstrap(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 es = Elasticsearch(['elasticsearch:9200'], # ES Connection To elastic DB
                    use_ssl=True,    
