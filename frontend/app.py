@@ -80,7 +80,7 @@ def login():
         try:
             if authenticate_user(es, username, password):
                 session['username'] = username
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('home'))
             else:
                 flash('Invalid username or password', 'danger')
         except Exception as e:
