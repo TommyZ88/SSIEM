@@ -51,7 +51,8 @@ services:
         soft: 65536
         hard: 65536
     #volumes:
-     # - ./elasticsearch/data:/usr/share/elasticsearch/data
+     # - ./init-elasticsearch.sh:/init-elasticsearch.sh
+    #command: ["/init-elasticsearch.sh"]
 
   kibana:
     image: wazuh/wazuh-kibana-odfe:4.2.6

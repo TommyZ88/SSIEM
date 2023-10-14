@@ -1,4 +1,4 @@
-from flask import Flask, request, session, jsonify, render_template, url_for, redirect, flash, request, g
+from flask import Flask, request, session, jsonify, render_template, url_for, redirect, flash, g
 from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from wtforms import StringField, PasswordField, BooleanField
@@ -43,6 +43,13 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
 
 #Home page
+@app.route('/')
+def index():
+    if g.user:
+        return render_template('home.html', user=session['username'])
+    return redirect(url_for('login'))
+
+
 @app.route('/home') 
 def home():
     if g.user:
@@ -64,13 +71,17 @@ def login():
         session.pop('username', None)
         username = form.username.data
         password = form.password.data   
-        if authenticate_user(es, username, password):
-            session['username'] = username
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Invalid username or password', 'danger')
+        
+        try:
+            if authenticate_user(es, username, password):
+                session['username'] = username
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Invalid username or password', 'danger')
+        except Exception as e:
+            flash('An error occurred: ' + str(e), 'danger')
+    
     return render_template('login.html', form=form)
-
 
 @app.before_request
 def before_request():
