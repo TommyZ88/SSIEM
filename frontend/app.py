@@ -67,6 +67,11 @@ def addUser():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    
+    # Check if the user is already logged in
+    if 'username' in session:
+        return redirect(url_for('home'))  # Redirect to the home page
+    
     if form.validate_on_submit():
         session.pop('username', None)
         username = form.username.data
@@ -91,9 +96,8 @@ def before_request():
 
 @app.route('/logout')
 def logout():
-    form = LoginForm()
     session.pop('username', None)
-    return render_template('login.html', form=form)
+    return redirect(url_for('login')) 
 
 
 #Account management page
