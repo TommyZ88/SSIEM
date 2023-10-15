@@ -3,7 +3,7 @@ body {
 }
 
 .SIEM {
-    background-color: #104766;
+    background-color: #003f5c;
     color: #fff;
     text-align: center;
     padding: 10px 0;
@@ -14,7 +14,7 @@ body {
 }
 
 .siem-heading {
-    color: #104766;
+    color: #003f5c;
     text-align: center;
 }
 .siem-heading {
@@ -35,7 +35,7 @@ body, ul, li {
 
 .content {
     padding-bottom: 10px;
-    color: #104766;/* Adjust this value to match the footer's height */
+    color: #003f5c;/* Adjust this value to match the footer's height */
     text-align: center;
     padding: 20px;
     font-size: 1.5em;
@@ -43,8 +43,8 @@ body, ul, li {
 
 /* Style the header (navigation bar) */
 header {
-background-color: #a6a6a6;
-color: #fff;
+background-color: #dddddd;
+color: #000;
 padding: 10px 0;
 }
 
@@ -79,21 +79,22 @@ color: #000;
 nav a {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #a6a6a6; /* Button background color */
-    color: #fff; /* Button text color */
+    background-color: #dddddd; /* Button background color */
+    color: #000; /* Button text color */
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 nav a:hover {
-    background-color: #104766; /* Button background color on hover */
+    background-color: #003f5c; /* Button background color on hover */
     color: #fff;
 }
 
 /* Add a class to style the active link */
 nav a.active {
-    background-color: #104766;
+    background-color: #003f5c;
+    color: #fff
 }
 
 .team-section {
@@ -129,7 +130,7 @@ position: fixed;
 bottom: 0;
 left: 0;
 width: 100%;
-background-color: #a6a6a6;
+background-color: #dddddd;
 color: #fff;
 text-align: center;
 padding: 10px 0;
@@ -253,11 +254,11 @@ td {
 }
 
 th {
-    background-color: #F8B195; 
+    background-color: #003f5c; 
 }
 
-#agent_info_table, #event_logs_table th {
-    color: #333;
+#agent_info_table th, #event_logs_table th {
+    color: #fff;
     padding: 10px;
 }
 

@@ -1,15 +1,26 @@
-import plotly.express as px
 import plotly.graph_objects as go
 from elasticsearch import Elasticsearch
 import json
 from plotly.utils import PlotlyJSONEncoder
 
+
 def create_total_agent_alerts_bar_graph(es: Elasticsearch):
-
     index_name = "wazuh-alerts-*"
+    body = generate_query_body()
+    
+    response = es.search(index=index_name, body=body)
+    agents, alert_counts = extract_data(response)
+    
+    if not agents:
+        fig = create_no_data_figure()
+    else:
+        fig = create_bar_chart_figure(agents, alert_counts)
+    
+    return json.dumps(fig, cls=PlotlyJSONEncoder)
 
-    # Query to get total alerts grouped by agent
-    body = {
+
+def generate_query_body():
+    return {
         "size": 0,
         "query": {
             "bool": {
@@ -22,7 +33,7 @@ def create_total_agent_alerts_bar_graph(es: Elasticsearch):
             "agents": {
                 "terms": {
                     "field": "agent.name",
-                    "size": 10,  # Getting top 10 agents by alert counts. Adjust if necessary.
+                    "size": 10,  
                     "order": {
                         "_count": "desc"
                     }
@@ -31,21 +42,48 @@ def create_total_agent_alerts_bar_graph(es: Elasticsearch):
         }
     }
 
-    response = es.search(index=index_name, body=body)
 
+def extract_data(response):
     buckets = response['aggregations']['agents']['buckets']
-
     agents = [str(bucket['key']) for bucket in buckets]
     alert_counts = [bucket['doc_count'] for bucket in buckets]
+    return agents, alert_counts
 
-    traces = []
 
-    # Using the same colors as provided
-    colors = ['#F8B195','#F67280','#C06C84','#6C5B7B','#355C7D'] 
+def create_no_data_figure():
+    fig = go.Figure()
+    fig.add_layout_image(
+        dict(
+            source="../static/images/noresults.png",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5,
+            sizex=0.5, sizey=0.5,
+            xanchor="center", yanchor="middle"
+        )
+    )
+    fig.update_layout(
+        title=dict(
+            text='<b>Total Alerts Per Agent<b>',
+            x=0.05,
+            y=0.95,
+            font=dict(size=20, color='black', family='Arial')
+        ),
+        xaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showline=False, showticklabels=False),
+        width=630,
+        height=300,
+        plot_bgcolor='white'
+    )
+    return fig
+
+
+def create_bar_chart_figure(agents, alert_counts):
+    fig = go.Figure()
+    colors = ["#58508d","#bc5090","#ff6361","#ffa600"]
 
     for agent, alert_count, color in zip(agents, alert_counts, colors):
         hover_text = f'<b>Count: {alert_count}</b>'
-        trace = go.Bar(
+        fig.add_trace(go.Bar(
             x=[agent], 
             y=[alert_count], 
             name=agent, 
@@ -53,28 +91,15 @@ def create_total_agent_alerts_bar_graph(es: Elasticsearch):
             width=[0.6],
             hoverinfo='text', 
             hovertext=[hover_text]
-        )
-
-        traces.append(trace)
-
-    fig = go.Figure(data=traces)
+        ))
 
     fig.update_layout(
-        margin=dict(
-            l=20,
-            r=50,
-            t=60,
-            b=0
-        ),
+        margin=dict(l=20, r=50, t=60, b=0),
         title=dict(
             text='<b>Total Alerts Per Agent<b>',
             x=0.05,
             y=0.95,
-            font=dict(
-                size=20,
-                color='black',
-                family='Arial',
-            )
+            font=dict(size=20, color='black', family='Arial')
         ),
         width=630,
         height=300,
@@ -91,13 +116,7 @@ def create_total_agent_alerts_bar_graph(es: Elasticsearch):
             tickcolor='lightgrey',
             title_standoff=20
         ),
-        xaxis=dict(
-            showticklabels=False,
-            showline=True,
-            linewidth=1,
-            linecolor='lightgrey'
-        ),
+        xaxis=dict(showticklabels=False, showline=True, linewidth=1, linecolor='lightgrey'),
         legend=dict(x=1, y=1)
-        )
-
-    return json.dumps(fig, cls=PlotlyJSONEncoder)
+    )
+    return fig
