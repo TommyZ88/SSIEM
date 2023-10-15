@@ -1,55 +1,92 @@
 body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
-    font-family: comic-sans, Calibri, Arial;
-  }
+  background-color: #003f5c;
+  font-family: comic-sans, Calibri, Arial;
+  margin: 0;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+}
 
 #bad_security {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100px;
-    height: auto;
+  width: 120px;
+  margin-bottom: 20px;  
+}
+
+.login-title {
+  color: #fff; 
+  margin-bottom: 0.1px;  
+  font-size: 28px;
+  font-weight: normal;  
+  text-align: center; 
+}
+
+.login-subtitle {
+  color: #fff; 
+  margin-bottom: 50px;  
+  font-size: 22px;
+  font-weight: normal;  
+  text-align: center; 
 }
 
 .form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
+  width: 340px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+
 .form-signin .form-signin-heading,
-.form-signin .checkbox {
+.form-signin {
   margin-bottom: 10px;
 }
-.form-signin .checkbox {
-  font-weight: normal;
+
+.form-signin label {
+  margin-right: 15px;  
 }
+
 .form-signin .form-control {
   position: relative;
   height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 10px;
-  font-size: 26px;
+  font-size: 16px;
 }
+
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  
+
+.form-signin input[type="text"] {
+  margin-bottom: 15px;
+  width: 70%;
+  padding: 8px;
 }
+
 .form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  width: 70%;
+  padding: 8px;
 }
 
+button.btn {
+  font-size: 16px;
+  background-color: #003f5c;
+  color: #fff;
+  border-radius: 4px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #003f5c;
+}
 
+/* Flash message and Alert classes */
 .flash-message {
   position: fixed;
   top: 10px;
@@ -58,7 +95,6 @@ body {
   width: 300px;
 }
 
-/* Alert classes */
 .alert {
   padding: 10px;
   margin-bottom: 100px;

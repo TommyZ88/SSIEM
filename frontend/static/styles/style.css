@@ -126,11 +126,10 @@ color: #777;
 
 /* footer */
 footer {
-position: fixed;
 bottom: 0;
 left: 0;
 width: 100%;
-background-color: #dddddd;
+background-color: #003f5c;
 color: #fff;
 text-align: center;
 padding: 10px 0;

@@ -56,12 +56,6 @@ def home():
         return render_template('home.html', user=session['username'])
     return redirect(url_for('login'))
 
-@app.route("/addUser")
-def addUser():
-    if g.user:
-        return render_template('addUser.html', user=session['username'])
-    return redirect(url_for('login'))
-
 
 #Login Page
 @app.route('/login', methods=['GET', 'POST'])
@@ -98,14 +92,6 @@ def before_request():
 def logout():
     session.pop('username', None)
     return redirect(url_for('login')) 
-
-
-#Account management page
-@app.route('/management') 
-def management():
-    if g.user:
-        return render_template('management.html', user=session['username'])
-    return redirect(url_for('login'))
 
 
 @app.route('/dashboard')
