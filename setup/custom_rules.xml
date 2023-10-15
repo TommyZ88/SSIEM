@@ -1,0 +1,67 @@
+<!-- New Group to overwrite sca rules -->
+<group name="local,sca,gdpr_IV_35.7.d,pci_dss_2.2,nist_800_53_CM.1,tsc_CC7.1,tsc_CC7.2,">
+  <rule id="19004" level="0" overwrite="yes">
+    <if_sid>19001</if_sid>
+    <field name="sca.score">^4\d|^3\d</field>
+    <options>no_full_log</options>
+    <description>SCA summary: $(sca.policy): Score less than 50% ($(sca.score))</description>
+  </rule>
+  
+  <rule id="19007" level="0" overwrite="yes">
+    <if_sid>19006</if_sid>
+    <field name="sca.check.result">^failed</field>
+    <options>no_full_log</options>
+    <description>$(sca.policy): $(sca.check.title)</description>
+  </rule>
+  
+  <rule id="19008" level="0" overwrite="yes">
+    <if_sid>19006</if_sid>
+    <field name="sca.check.result">^passed</field>
+    <options>no_full_log</options>
+    <description>$(sca.policy): $(sca.check.title)</description>
+  </rule>
+  
+  <rule id="19009" level="0" overwrite="yes">
+    <if_sid>19006</if_sid>
+    <field name="sca.check.status">^Not applicable</field>
+    <options>no_full_log</options>
+    <description>$(sca.policy): $(sca.check.title)</description>
+  </rule>
+</group>
+
+
+<!-- Apparmor rules, all levels set to 0 -->
+<group name="local,syslog,apparmor,">
+  <rule id="52000" level="0" overwrite="yes">
+    <decoded_as>kernel</decoded_as>
+    <match> apparmor=</match>
+    <description>Apparmor messages grouped.</description>
+  </rule>
+
+  <rule id="52001" level="0" overwrite="yes">
+    <if_sid>52000</if_sid>
+    <status>ALLOWED|STATUS</status>
+    <description>Apparmor Ignore ALLOWED or STATUS</description>
+  </rule>
+
+  <rule id="52002" level="0" overwrite="yes">
+    <if_sid>52000</if_sid>
+    <status>DENIED</status>
+    <match> apparmor=</match>
+    <description>Apparmor DENIED</description>
+  </rule>
+
+  <rule id="52003" level="0" overwrite="yes">
+    <if_sid>52002</if_sid>
+    <extra_data>exec</extra_data>
+    <description>Apparmor DENIED exec operation.</description>
+  </rule>
+
+  <rule id="52004" level="0" overwrite="yes">
+    <if_sid>52002</if_sid>
+    <extra_data>mknod</extra_data>
+    <description>Apparmor DENIED mknod operation.</description>
+  </rule>
+</group>
+
+
