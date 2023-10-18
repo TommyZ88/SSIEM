@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 echo "
 Creating the index..."
@@ -28,4 +28,3 @@ docker exec -it elasticsearch curl -k -u "admin:admin" -X POST "https://localhos
   "username": "owner",
   "password": "owner"
 }'
-
