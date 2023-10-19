@@ -83,7 +83,7 @@ def create_no_data_figure():
 
 
 def create_donut_chart_figure(data):
-    colors = ["#58508d","#bc5090","#ff6361","#ffa600"]
+    colors = ["#58508d","#bc5090","#ff6361","#ffa600","#003f5c"]
     colors = colors[:len(data["attack_id"])]  
 
     fig = go.Figure(data=[go.Pie(labels=data['attack_id'], values=data['counts'], hole=.5)])
