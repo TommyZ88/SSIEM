@@ -24,7 +24,7 @@ while true; do
         # Execute the Wazuh script
         echo "Waiting for Wazuh to initialise"
         sleep 30
-        ./setup/windows-wazuh.sh
+        ./setup/wazuh.sh
         break
     else
         sleep 10
